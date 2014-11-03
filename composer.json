@@ -1,6 +1,7 @@
 {
 	"name": "aimeos/ai-flow",
 	"description": "Aimeos extension for utilizing TYPO3 flow components",
+	"keywords": ["aimeos", "adapter", "typo3", "flow"],
 	"homepage": "http://aimeos.org",
 	"type": "aimeos-extension",
 	"license": "LGPL-3.0",
@@ -9,9 +10,7 @@
 		"issues": "https://github.com/aimeos/ai-flow/issues"
 	},
 	"require": {
-		"zendframework/zend-servicemanager": "2.3.*",
-		"zendframework/zend-i18n": "2.3.*",
-		"typo3/swiftmailer": "5.*",
+		"typo3/swiftmailer": "dev-master",
 		"typo3/flow": "2.2.*",
 		"php": ">=5.3.2"
 	},

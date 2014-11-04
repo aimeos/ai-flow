@@ -52,7 +52,6 @@ class MW_View_Helper_Url_Flow
 
 		$this->_builder
 			->reset()
-//			->setTargetPageUid( $target )
 			->setSection( join( '/', $trailing ) )
 			->setCreateAbsoluteUri( $values['absoluteUri'] )
 			->setFormat( $values['format'] );
@@ -64,7 +63,7 @@ class MW_View_Helper_Url_Flow
 
 		$params['node'] = $target;
 
-		return $this->_builder->uriFor( $action, $params, $controller );
+		return $this->_builder->uriFor( $action, $params, $controller, $values['package'], $values['subpackage'] );
 	}
 
 
@@ -77,9 +76,19 @@ class MW_View_Helper_Url_Flow
 	protected function _getValues( array $config )
 	{
 		$values = array(
+			'package' => null,
+			'subpackage' => null,
 			'absoluteUri' => false,
 			'format' => 'html',
 		);
+
+		if( isset( $config['package'] ) ) {
+			$values['package'] = (string) $config['package'];
+		}
+
+		if( isset( $config['subpackage'] ) ) {
+			$values['subpackage'] = (string) $config['subpackage'];
+		}
 
 		if( isset( $config['absoluteUri'] ) ) {
 			$values['absoluteUri'] = (bool) $config['absoluteUri'];

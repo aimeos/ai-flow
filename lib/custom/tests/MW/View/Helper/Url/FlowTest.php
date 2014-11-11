@@ -12,6 +12,7 @@
 class MW_View_Helper_Url_FlowTest extends MW_Unittest_Testcase
 {
 	private $_object;
+	private $_mockRouter;
 
 
 	/**
@@ -41,7 +42,7 @@ class MW_View_Helper_Url_FlowTest extends MW_Unittest_Testcase
 			->method( 'getArgumentNamespace' )
 			->will( $this->returnValue( 'ai' ) );
 
-		$mockRouter = $this->getMock( 'TYPO3\Flow\Mvc\Routing\Router' );
+		$this->_mockRouter = $this->getMock( 'TYPO3\Flow\Mvc\Routing\Router' );
 		$mockEnv = $this->getMock( 'TYPO3\Flow\Utility\Environment', array( 'isRewriteEnabled' ), array(), '', false );
 
 		$builder = new \TYPO3\Flow\Mvc\Routing\UriBuilder();
@@ -51,7 +52,7 @@ class MW_View_Helper_Url_FlowTest extends MW_Unittest_Testcase
 
 		$property = $objectReflection->getProperty( 'router' );
 		$property->setAccessible( true );
-		$property->setValue( $builder, $mockRouter );
+		$property->setValue( $builder, $this->_mockRouter );
 
 		$property = $objectReflection->getProperty( 'environment' );
 		$property->setAccessible( true );
@@ -75,32 +76,48 @@ class MW_View_Helper_Url_FlowTest extends MW_Unittest_Testcase
 
 	public function testTransform()
 	{
-		$this->assertEquals( '/index.php/shop', $this->_object->transform( '/shop', 'catalog', 'list' ) );
+		$this->_mockRouter->expects( $this->once() )->method( 'resolve' )
+			->will( $this->returnValue( 'shop/catalog/list') );
+
+		$this->assertEquals( '/index.php/shop/catalog/list', $this->_object->transform( 'shop', 'catalog', 'list' ) );
 	}
 
 
 	public function testTransformSlashes()
 	{
-		$this->assertEquals( '/index.php/shop?test=a%2Fb', $this->_object->transform( '/shop', 'catalog', 'list', array( 'test' => 'a/b' ) ) );
+		$this->_mockRouter->expects( $this->once() )->method( 'resolve' )
+			->will( $this->returnValue( 'shop/catalog/list?test=a%2Fb') );
+
+		$this->assertEquals( '/index.php/shop/catalog/list?test=a%2Fb', $this->_object->transform( 'shop', 'catalog', 'list', array( 'test' => 'a/b' ) ) );
 	}
 
 
 	public function testTransformArrays()
 	{
-		$this->assertEquals( '/index.php/shop?test%5B0%5D=a&test%5B1%5D=b', $this->_object->transform( '/shop', 'catalog', 'list', array( 'test' => array( 'a', 'b' ) ) ) );
+		$this->_mockRouter->expects( $this->once() )->method( 'resolve' )
+			->will( $this->returnValue( 'shop/catalog/list?test%5B0%5D=a&test%5B1%5D=b') );
+
+		$this->assertEquals( '/index.php/shop/catalog/list?test%5B0%5D=a&test%5B1%5D=b', $this->_object->transform( 'shop', 'catalog', 'list', array( 'test' => array( 'a', 'b' ) ) ) );
 	}
 
 
 	public function testTransformTrailing()
 	{
-		$this->assertEquals( '/index.php/shop#a/b', $this->_object->transform( '/shop', 'catalog', 'list', array(), array( 'a', 'b' ) ) );
+		$this->_mockRouter->expects( $this->once() )->method( 'resolve' )
+			->will( $this->returnValue( 'shop/catalog/list') );
+
+		$this->assertEquals( '/index.php/shop/catalog/list#a/b', $this->_object->transform( 'shop', 'catalog', 'list', array(), array( 'a', 'b' ) ) );
 	}
 
 
 	public function testTransformAbsolute()
 	{
+		$this->_mockRouter->expects( $this->once() )->method( 'resolve' )
+			->will( $this->returnValue( 'shop/catalog/list') );
+
 		$options = array( 'absoluteUri' => true );
-		$result = $this->_object->transform( '/shop', 'catalog', 'list', array(), array(), $options );
-		$this->assertEquals( 'http://localhost/index.php/shop', $result );
+		$result = $this->_object->transform( 'shop', 'catalog', 'list', array(), array(), $options );
+
+		$this->assertEquals( 'http://localhost/index.php/shop/catalog/list', $result );
 	}
 }

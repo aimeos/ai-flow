@@ -11,6 +11,7 @@
 		"forum": "https://help.aimeos.org",
 		"wiki": "https://docs.aimeos.org"
 	},
+    "minimum-stability": "dev",
 	"require": {
 		"typo3/flow": "2.2.*",
 		"php": ">=5.3.2"

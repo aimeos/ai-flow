@@ -20,6 +20,10 @@ class MW_Cache_FlowTest extends MW_Unittest_Testcase
 	 */
 	protected function setUp()
 	{
+		if( class_exists( '\\TYPO3\\Flow\\Cache\\Frontend\\FrontendInterface' ) === false ) {
+			$this->markTestSkipped( 'Class \\TYPO3\\Flow\\Cache\\Frontend\\FrontendInterface not found' );
+		}
+
 		$this->_mock = $this->getMock( 'TYPO3\Flow\Cache\Frontend\FrontendInterface' );
 		$this->_object = new MW_Cache_Flow( array(), $this->_mock );
 	}

@@ -10,5 +10,6 @@ before_script:
   - cd ../arcavias-core
   - mv ../ai-flow ext/
   - composer require "typo3/flow" "2.2.*"
-  - composer install
+  - ls -l
+  - ls -l Packages/*
 script: "vendor/bin/phing -Ddir=ext/ai-flow testext && vendor/bin/phing -Ddir=ext/ai-flow checkext"

@@ -1,6 +1,6 @@
 {
 	"name": "aimeos/ai-flow",
-	"description": "Aimeos extension for utilizing TYPO3 flow components",
+	"description": "Aimeos extension for utilizing TYPO3 Flow components",
 	"keywords": ["aimeos", "adapter", "typo3", "flow"],
 	"homepage": "http://aimeos.org",
 	"type": "aimeos-extension",
@@ -12,8 +12,9 @@
 		"wiki": "https://docs.aimeos.org"
 	},
 	"minimum-stability": "dev",
+	"prefer-stable": true,
 	"require": {
-		"typo3/flow": "2.2.*",
+		"typo3/flow": "~2.0",
 		"php": ">=5.3.2"
 	},
 	"autoload": {

@@ -8,16 +8,13 @@
  */
 
 
-namespace Aimeos\MAdmin\Cache\Proxy;
-
-
 /**
  * Cache proxy for creating the Flow cache object on demand.
  *
  * @package MAdmin
  * @subpackage Cache
  */
-class Flow
+class MAdmin_Cache_Proxy_Flow
 	extends \MAdmin_Cache_Proxy_Default
 	implements \MW_Cache_Interface
 {

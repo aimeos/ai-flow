@@ -37,7 +37,7 @@ class MW_View_Helper_Url_FlowTest extends MW_Unittest_Testcase
 			->method( 'getBaseUri' )
 			->will( $this->returnValue( 'http://localhost/' ) );
 
-		$mockMainRequest = $this->getMock( 'TYPO3\Flow\Mvc\ActionRequest', array( 'isDispatched' ), array( $mockHttpRequest ) );
+		$mockMainRequest = $this->getMock( 'TYPO3\Flow\Mvc\ActionRequest', array( 'getControllerObjectName' ), array( $mockHttpRequest ) );
 		$mockMainRequest->expects( $this->any() )
 			->method( 'getArgumentNamespace' )
 			->will( $this->returnValue( 'ai' ) );

@@ -46,7 +46,7 @@ class MAdmin_Cache_Proxy_Flow
 		if( !isset( $this->_object ) )
 		{
 			$siteid = $this->_context->getLocale()->getSiteId();
-			$conf = array( 'siteid' => $this->_context->getConfig()->get( 'flow/cache/prefix' ) . $siteid );
+			$conf = array( 'siteid' => $this->_context->getConfig()->get( 'madmin/cache/prefix' ) . $siteid );
 			$this->_object = \MW_Cache_Factory::createManager( 'Flow', $conf, $this->_cache );
 		}
 

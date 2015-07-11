@@ -8,7 +8,7 @@
 return array(
 	'name' => 'ai-flow',
 	'depends' => array(
-		'arcavias-core',
+		'docs-core',
 	),
 	'include' => array(
 		'lib/custom/src',

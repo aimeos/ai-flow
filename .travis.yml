@@ -8,10 +8,18 @@ php:
   - "5.4"
   - "5.3"
 
+env:
+  - FLOW_VERSION=2.2.*
+  - FLOW_VERSION=2.3.*
+
 before_script:
   - git clone --depth=50 --branch=master git://github.com/aimeos/aimeos-core.git ../aimeos-core
   - cd ../aimeos-core
   - mv ../ai-flow ext/
-  - composer require "typo3/flow" "2.2.*"
+  - composer require "typo3/flow:${FLOW_VERSION}"
 
 script: "vendor/bin/phing -Ddir=ext/ai-flow testext checkext"
+
+after_success:
+  - php vendor/bin/coveralls -c ext/ai-flow/.coveralls.yml
+

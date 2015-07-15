@@ -18,7 +18,7 @@ before_script:
   - mv ../ai-flow ext/
   - composer require "typo3/flow:${FLOW_VERSION}"
 
-script: "vendor/bin/phing -Ddir=ext/ai-flow testext checkext"
+script: "vendor/bin/phing -Ddir=ext/ai-flow coverageext checkext"
 
 after_success:
   - php vendor/bin/coveralls -c ext/ai-flow/.coveralls.yml

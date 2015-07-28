@@ -1,8 +1,8 @@
 {
 	"name": "aimeos/ai-flow",
-	"description": "Aimeos extension for utilizing TYPO3 Flow components",
-	"keywords": ["aimeos", "adapter", "typo3", "flow"],
-	"homepage": "https://aimeos.org",
+	"description": "Flow/NeosCMS adapter for Aimeos web shops and e-commerce solutions",
+	"keywords": ["aimeos", "adapter", "typo3", "flow", "neoscms", "shop", "e-commerce"],
+	"homepage": "https://aimeos.org/Flow",
 	"type": "aimeos-extension",
 	"license": "LGPL-3.0",
 	"support": {

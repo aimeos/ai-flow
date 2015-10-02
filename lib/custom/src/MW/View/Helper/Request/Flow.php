@@ -18,7 +18,7 @@ class MW_View_Helper_Request_Flow
 	extends MW_View_Helper_Abstract
 	implements MW_View_Helper_Interface
 {
-	private $_request;
+	private $request;
 
 
 	/**
@@ -31,7 +31,7 @@ class MW_View_Helper_Request_Flow
 	{
 		parent::__construct( $view );
 
-		$this->_request = $request;
+		$this->request = $request;
 	}
 
 
@@ -53,7 +53,7 @@ class MW_View_Helper_Request_Flow
 	 */
 	public function getBody()
 	{
-		return $this->_request->getContent();
+		return $this->request->getContent();
 	}
 
 
@@ -64,6 +64,6 @@ class MW_View_Helper_Request_Flow
 	 */
 	public function getClientAddress()
 	{
-		return $this->_request->getClientIpAddress();
+		return $this->request->getClientIpAddress();
 	}
 }

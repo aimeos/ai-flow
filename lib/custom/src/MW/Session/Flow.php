@@ -17,7 +17,7 @@
 class MW_Session_Flow
 	implements MW_Session_Interface
 {
-	private $_object;
+	private $object;
 
 
 	/**
@@ -27,7 +27,7 @@ class MW_Session_Flow
 	 */
 	public function __construct( TYPO3\Flow\Session\SessionInterface $object )
 	{
-		$this->_object = $object;
+		$this->object = $object;
 	}
 
 
@@ -42,11 +42,11 @@ class MW_Session_Flow
 	 */
 	public function get( $name, $default = null )
 	{
-		if( $this->_object->hasKey( $name ) !== true ) {
+		if( $this->object->hasKey( $name ) !== true ) {
 			return $default;
 		}
 
-		return $this->_object->getData( $name );
+		return $this->object->getData( $name );
 	}
 
 
@@ -61,6 +61,6 @@ class MW_Session_Flow
 	 */
 	public function set( $name, $value )
 	{
-		$this->_object->putData( $name, $value );
+		$this->object->putData( $name, $value );
 	}
 }

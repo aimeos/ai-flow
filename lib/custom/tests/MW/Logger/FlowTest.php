@@ -11,7 +11,7 @@
  */
 class MW_Logger_FlowTest extends MW_Unittest_Testcase
 {
-	private $_object;
+	private $object;
 
 
 	/**
@@ -33,7 +33,7 @@ class MW_Logger_FlowTest extends MW_Unittest_Testcase
 		$log = new \TYPO3\Flow\Log\Logger();
 		$log->addBackend( $be );
 
-		$this->_object = new MW_Logger_Flow( $log );
+		$this->object = new MW_Logger_Flow( $log );
 	}
 
 
@@ -51,21 +51,21 @@ class MW_Logger_FlowTest extends MW_Unittest_Testcase
 
 	public function testLog()
 	{
-		$this->_object->log( 'error' );
+		$this->object->log( 'error' );
 		$this->assertRegExp( '/^[^ ]+ [^ ]+ [0-9]+[ ]+ERROR[ ]+error/', file_get_contents( 'flow.log' ) );
 	}
 
 
 	public function testNonScalarLog()
 	{
-		$this->_object->log( array( 'error', 'error2', 2 ) );
+		$this->object->log( array( 'error', 'error2', 2 ) );
 		$this->assertRegExp( '/^[^ ]+ [^ ]+ [0-9]+[ ]+ERROR[ ]+\["error","error2",2\]/', file_get_contents( 'flow.log' ) );
 	}
 
 
 	public function testLogDebug()
 	{
-		$this->_object->log( 'debug', MW_Logger_Abstract::DEBUG );
+		$this->object->log( 'debug', MW_Logger_Abstract::DEBUG );
 		$this->assertEquals( '', file_get_contents( 'flow.log' ) );
 	}
 
@@ -73,6 +73,6 @@ class MW_Logger_FlowTest extends MW_Unittest_Testcase
 	public function testBadPriority()
 	{
 		$this->setExpectedException( 'MW_Logger_Exception' );
-		$this->_object->log( 'error', -1 );
+		$this->object->log( 'error', -1 );
 	}
 }

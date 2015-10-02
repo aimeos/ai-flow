@@ -8,8 +8,8 @@
 
 class MW_View_Helper_Request_FlowTest extends MW_Unittest_Testcase
 {
-	private $_object;
-	private $_mock;
+	private $object;
+	private $mock;
 
 
 	/**
@@ -24,11 +24,11 @@ class MW_View_Helper_Request_FlowTest extends MW_Unittest_Testcase
 			$this->markTestSkipped( '\TYPO3\Flow\Http\Request is not available' );
 		}
 
-		$this->_mock = $this->getMockBuilder( '\TYPO3\Flow\Http\Request' )
+		$this->mock = $this->getMockBuilder( '\TYPO3\Flow\Http\Request' )
 			->setConstructorArgs( array( array(), array(), array(), array() ) )->getMock();
 
 		$view = new \MW_View_Default();
-		$this->_object = new MW_View_Helper_Request_Flow( $view, $this->_mock, array() );
+		$this->object = new MW_View_Helper_Request_Flow( $view, $this->mock, array() );
 	}
 
 
@@ -40,30 +40,30 @@ class MW_View_Helper_Request_FlowTest extends MW_Unittest_Testcase
 	 */
 	protected function tearDown()
 	{
-		unset( $this->_object, $this->mock );
+		unset( $this->object, $this->mock );
 	}
 
 
 	public function testTransform()
 	{
-		$this->assertInstanceOf( 'MW_View_Helper_Request_Flow', $this->_object->transform() );
+		$this->assertInstanceOf( 'MW_View_Helper_Request_Flow', $this->object->transform() );
 	}
 
 
 	public function testGetBody()
 	{
-		$this->_mock->expects( $this->once() )->method( 'getContent' )
+		$this->mock->expects( $this->once() )->method( 'getContent' )
 			->will( $this->returnValue( 'body' ) );
 
-		$this->assertEquals( 'body', $this->_object->transform()->getBody() );
+		$this->assertEquals( 'body', $this->object->transform()->getBody() );
 	}
 
 
 	public function testGetClientAddress()
 	{
-		$this->_mock->expects( $this->once() )->method( 'getClientIpAddress' )
+		$this->mock->expects( $this->once() )->method( 'getClientIpAddress' )
 			->will( $this->returnValue( '127.0.0.1' ) );
 
-		$this->assertEquals( '127.0.0.1', $this->_object->transform()->getClientAddress() );
+		$this->assertEquals( '127.0.0.1', $this->object->transform()->getClientAddress() );
 	}
 }

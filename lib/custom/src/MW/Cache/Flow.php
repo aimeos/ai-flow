@@ -18,8 +18,8 @@ class MW_Cache_Flow
 	extends MW_Cache_Abstract
 	implements MW_Cache_Interface
 {
-	private $_object;
-	private $_prefix;
+	private $object;
+	private $prefix;
 
 
 	/**
@@ -30,8 +30,8 @@ class MW_Cache_Flow
 	 */
 	public function __construct( array $config, TYPO3\Flow\Cache\Frontend\FrontendInterface $cache )
 	{
-		$this->_prefix = ( isset( $config['siteid'] ) ? $config['siteid'] . '-' : '' );
-		$this->_object = $cache;
+		$this->prefix = ( isset( $config['siteid'] ) ? $config['siteid'] . '-' : '' );
+		$this->object = $cache;
 	}
 
 
@@ -44,7 +44,7 @@ class MW_Cache_Flow
 	 */
 	public function delete( $key )
 	{
-		$this->_object->remove( $this->_prefix . $key );
+		$this->object->remove( $this->prefix . $key );
 	}
 
 
@@ -59,7 +59,7 @@ class MW_Cache_Flow
 	public function deleteList( array $keys )
 	{
 		foreach( $keys as $key ) {
-			$this->_object->remove( $this->_prefix . $key );
+			$this->object->remove( $this->prefix . $key );
 		}
 	}
 
@@ -75,7 +75,7 @@ class MW_Cache_Flow
 	public function deleteByTags( array $tags )
 	{
 		foreach( $tags as $tag ) {
-			$this->_object->flushByTag( $this->_prefix . $tag );
+			$this->object->flushByTag( $this->prefix . $tag );
 		}
 	}
 
@@ -87,10 +87,10 @@ class MW_Cache_Flow
 	 */
 	public function flush()
 	{
-		if( $this->_prefix ) {
-			$this->_object->flushByTag( $this->_prefix . 'siteid' );
+		if( $this->prefix ) {
+			$this->object->flushByTag( $this->prefix . 'siteid' );
 		} else {
-			$this->_object->flush();
+			$this->object->flush();
 		}
 	}
 
@@ -106,7 +106,7 @@ class MW_Cache_Flow
 	 */
 	public function get( $name, $default = null )
 	{
-		if( ( $entry = $this->_object->get( $this->_prefix . $name ) ) !== false ) {
+		if( ( $entry = $this->object->get( $this->prefix . $name ) ) !== false ) {
 			return $entry;
 		}
 
@@ -130,7 +130,7 @@ class MW_Cache_Flow
 
 		foreach( $keys as $key )
 		{
-			if( ( $entry = $this->_object->get( $this->_prefix . $key ) ) !== false ) {
+			if( ( $entry = $this->object->get( $this->prefix . $key ) ) !== false ) {
 				$result[$key] = $entry;
 			}
 		}
@@ -152,13 +152,13 @@ class MW_Cache_Flow
 	public function getListByTags( array $tags )
 	{
 		$result = array();
-		$len = strlen( $this->_prefix );
+		$len = strlen( $this->prefix );
 
 		foreach( $tags as $tag )
 		{
-			foreach( $this->_object->getByTag( $this->_prefix . $tag ) as $key => $value )
+			foreach( $this->object->getByTag( $this->prefix . $tag ) as $key => $value )
 			{
-				if( strncmp( $key, $this->_prefix, $len ) === 0 ) {
+				if( strncmp( $key, $this->prefix, $len ) === 0 ) {
 					$result[ substr( $key, $len ) ] = $value;
 				} else {
 					$result[$key] = $value;
@@ -191,13 +191,13 @@ class MW_Cache_Flow
 			$expires = null;
 		}
 
-		$tagList = ( $this->_prefix ? array( $this->_prefix . 'siteid' ) : array() );
+		$tagList = ( $this->prefix ? array( $this->prefix . 'siteid' ) : array() );
 
 		foreach( $tags as $tag ) {
-			$tagList[] = $this->_prefix . $tag;
+			$tagList[] = $this->prefix . $tag;
 		}
 
-		$this->_object->set( $this->_prefix . $name, $value, $tagList, $expires );
+		$this->object->set( $this->prefix . $name, $value, $tagList, $expires );
 	}
 
 

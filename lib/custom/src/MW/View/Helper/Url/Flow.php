@@ -18,7 +18,7 @@ class MW_View_Helper_Url_Flow
 	extends MW_View_Helper_Abstract
 	implements MW_View_Helper_Interface
 {
-	private $_builder;
+	private $builder;
 
 
 	/**
@@ -31,7 +31,7 @@ class MW_View_Helper_Url_Flow
 	{
 		parent::__construct( $view );
 
-		$this->_builder = $builder;
+		$this->builder = $builder;
 	}
 
 
@@ -48,9 +48,9 @@ class MW_View_Helper_Url_Flow
 	 */
 	public function transform( $target = null, $controller = null, $action = null, array $params = array(), array $trailing = array(), array $config = array() )
 	{
-		$values = $this->_getValues( $config );
+		$values = $this->getValues( $config );
 
-		$this->_builder
+		$this->builder
 			->reset()
 			->setSection( join( '/', $trailing ) )
 			->setCreateAbsoluteUri( $values['absoluteUri'] )
@@ -63,7 +63,7 @@ class MW_View_Helper_Url_Flow
 
 		$params['node'] = $target;
 
-		return $this->_builder->uriFor( $action, $params, $controller, $values['package'], $values['subpackage'] );
+		return $this->builder->uriFor( $action, $params, $controller, $values['package'], $values['subpackage'] );
 	}
 
 
@@ -73,7 +73,7 @@ class MW_View_Helper_Url_Flow
 	 * @param array $config Associative list of key/value pairs
 	 * @return array Associative list of sanitized key/value pairs
 	 */
-	protected function _getValues( array $config )
+	protected function getValues( array $config )
 	{
 		$values = array(
 			'package' => null,

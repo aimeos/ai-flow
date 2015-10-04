@@ -9,7 +9,7 @@
 /**
  * Test class for MW_View_Helper_Url_Flow.
  */
-class MW_View_Helper_Url_FlowTest extends MW_Unittest_Testcase
+class MW_View_Helper_Url_FlowTest extends PHPUnit_Framework_TestCase
 {
 	private $object;
 	private $mockRouter;

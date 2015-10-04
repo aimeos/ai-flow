@@ -6,7 +6,7 @@
  */
 
 
-class MW_View_Helper_Request_FlowTest extends MW_Unittest_Testcase
+class MW_View_Helper_Request_FlowTest extends PHPUnit_Framework_TestCase
 {
 	private $object;
 	private $mock;

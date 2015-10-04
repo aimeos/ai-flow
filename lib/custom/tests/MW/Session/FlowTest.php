@@ -9,7 +9,7 @@
 /**
  * Test class for MW_Session_Flow.
  */
-class MW_Session_FlowTest extends MW_Unittest_Testcase
+class MW_Session_FlowTest extends PHPUnit_Framework_TestCase
 {
 	private $object;
 

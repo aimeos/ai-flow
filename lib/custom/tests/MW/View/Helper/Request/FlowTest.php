@@ -1,12 +1,13 @@
 <?php
 
+namespace Aimeos\MW\View\Helper\Request;
+
+
 /**
  * @license LGPLv3, http://opensource.org/licenses/LGPL-3.0
  * @copyright Aimeos (aimeos.org), 2015
  */
-
-
-class MW_View_Helper_Request_FlowTest extends PHPUnit_Framework_TestCase
+class FlowTest extends \PHPUnit_Framework_TestCase
 {
 	private $object;
 	private $mock;
@@ -27,8 +28,8 @@ class MW_View_Helper_Request_FlowTest extends PHPUnit_Framework_TestCase
 		$this->mock = $this->getMockBuilder( '\TYPO3\Flow\Http\Request' )
 			->setConstructorArgs( array( array(), array(), array(), array() ) )->getMock();
 
-		$view = new \MW_View_Default();
-		$this->object = new MW_View_Helper_Request_Flow( $view, $this->mock, array() );
+		$view = new \Aimeos\MW\View\Standard();
+		$this->object = new \Aimeos\MW\View\Helper\Request\Flow( $view, $this->mock, array() );
 	}
 
 
@@ -46,7 +47,7 @@ class MW_View_Helper_Request_FlowTest extends PHPUnit_Framework_TestCase
 
 	public function testTransform()
 	{
-		$this->assertInstanceOf( 'MW_View_Helper_Request_Flow', $this->object->transform() );
+		$this->assertInstanceOf( '\\Aimeos\\MW\\View\\Helper\\Request\\Flow', $this->object->transform() );
 	}
 
 

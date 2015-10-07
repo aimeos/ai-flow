@@ -8,15 +8,18 @@
  */
 
 
+namespace Aimeos\MW\Cache;
+
+
 /**
  * Flow caching implementation.
  *
  * @package MW
  * @subpackage Cache
  */
-class MW_Cache_Flow
-	extends MW_Cache_Abstract
-	implements MW_Cache_Interface
+class Flow
+	extends \Aimeos\MW\Cache\Base
+	implements \Aimeos\MW\Cache\Iface
 {
 	private $object;
 	private $prefix;
@@ -26,9 +29,9 @@ class MW_Cache_Flow
 	 * Initializes the object instance.
 	 *
 	 * @param array $config List of configuration values
-	 * @param TYPO3\Flow\Cache\Frontend\FrontendInterface $cache TYPO3 cache object
+	 * @param \TYPO3\Flow\Cache\Frontend\FrontendInterface $cache TYPO3 cache object
 	 */
-	public function __construct( array $config, TYPO3\Flow\Cache\Frontend\FrontendInterface $cache )
+	public function __construct( array $config, \TYPO3\Flow\Cache\Frontend\FrontendInterface $cache )
 	{
 		$this->prefix = ( isset( $config['siteid'] ) ? $config['siteid'] . '-' : '' );
 		$this->object = $cache;

@@ -8,15 +8,18 @@
  */
 
 
+namespace Aimeos\MW\View\Helper\Request;
+
+
 /**
  * View helper class for generating URLs using the Laravel 5 URL builder.
  *
  * @package MW
  * @subpackage View
  */
-class MW_View_Helper_Request_Flow
-	extends MW_View_Helper_Abstract
-	implements MW_View_Helper_Interface
+class Flow
+	extends \Aimeos\MW\View\Helper\Base
+	implements \Aimeos\MW\View\Helper\Iface
 {
 	private $request;
 
@@ -24,10 +27,10 @@ class MW_View_Helper_Request_Flow
 	/**
 	 * Initializes the request view helper.
 	 *
-	 * @param \MW_View_Interface $view View instance with registered view helpers
+	 * @param \\Aimeos\MW\View\Iface $view View instance with registered view helpers
 	 * @param \TYPO3\Flow\Http\Request $request Flow request object
 	 */
-	public function __construct( \MW_View_Interface $view, \TYPO3\Flow\Http\Request $request )
+	public function __construct( \Aimeos\MW\View\Iface $view, \TYPO3\Flow\Http\Request $request )
 	{
 		parent::__construct( $view );
 
@@ -38,7 +41,7 @@ class MW_View_Helper_Request_Flow
 	/**
 	 * Returns the request view helper.
 	 *
-	 * @return MW_View_Helper_Interface Request view helper
+	 * @return \Aimeos\MW\View\Helper\Iface Request view helper
 	 */
 	public function transform()
 	{

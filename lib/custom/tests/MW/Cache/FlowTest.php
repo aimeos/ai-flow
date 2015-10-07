@@ -1,12 +1,13 @@
 <?php
 
+namespace Aimeos\MW\Cache;
+
+
 /**
  * @license LGPLv3, http://opensource.org/licenses/LGPL-3.0
  * @copyright Aimeos (aimeos.org), 2014
  */
-
-
-class MW_Cache_FlowTest extends PHPUnit_Framework_TestCase
+class FlowTest extends \PHPUnit_Framework_TestCase
 {
 	private $object;
 	private $mock;
@@ -25,7 +26,7 @@ class MW_Cache_FlowTest extends PHPUnit_Framework_TestCase
 		}
 
 		$this->mock = $this->getMock( 'TYPO3\Flow\Cache\Frontend\FrontendInterface' );
-		$this->object = new MW_Cache_Flow( array(), $this->mock );
+		$this->object = new \Aimeos\MW\Cache\Flow( array(), $this->mock );
 	}
 
 
@@ -50,7 +51,7 @@ class MW_Cache_FlowTest extends PHPUnit_Framework_TestCase
 
 	public function testDeleteWithSiteId()
 	{
-		$object = new MW_Cache_Flow( array( 'siteid' => 1 ), $this->mock );
+		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'remove' )->with( $this->equalTo( '1-key' ) );
 		$object->delete( 'key' );
@@ -66,7 +67,7 @@ class MW_Cache_FlowTest extends PHPUnit_Framework_TestCase
 
 	public function testDeleteListWithSiteId()
 	{
-		$object = new MW_Cache_Flow( array( 'siteid' => 1 ), $this->mock );
+		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'remove' )->with( $this->equalTo( '1-key' ) );
 		$object->deleteList( array( 'key' ) );
@@ -82,7 +83,7 @@ class MW_Cache_FlowTest extends PHPUnit_Framework_TestCase
 
 	public function testDeleteByTagsWithSiteId()
 	{
-		$object = new MW_Cache_Flow( array( 'siteid' => 1 ), $this->mock );
+		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'flushByTag' )->with( $this->equalTo( '1-tag' ) );
 		$object->deleteByTags( array( 'tag' ) );
@@ -98,7 +99,7 @@ class MW_Cache_FlowTest extends PHPUnit_Framework_TestCase
 
 	public function testFlushWithSiteId()
 	{
-		$object = new MW_Cache_Flow( array( 'siteid' => 1 ), $this->mock );
+		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'flushByTag' )->with( $this->equalTo( '1-siteid' ) );
 		$object->flush();
@@ -116,7 +117,7 @@ class MW_Cache_FlowTest extends PHPUnit_Framework_TestCase
 
 	public function testGetWithSiteId()
 	{
-		$object = new MW_Cache_Flow( array( 'siteid' => 1 ), $this->mock );
+		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'get' )->with( $this->equalTo( '1-key' ) );
 		$object->get( 'key', 'default' );
@@ -135,7 +136,7 @@ class MW_Cache_FlowTest extends PHPUnit_Framework_TestCase
 
 	public function testGetListWithSiteId()
 	{
-		$object = new MW_Cache_Flow( array( 'siteid' => 1 ), $this->mock );
+		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'get' )->with( $this->equalTo( '1-key' ) );
 		$object->getList( array( 'key' ) );
@@ -153,7 +154,7 @@ class MW_Cache_FlowTest extends PHPUnit_Framework_TestCase
 
 	public function testGetListByTagsWithSiteId()
 	{
-		$object = new MW_Cache_Flow( array( 'siteid' => 1 ), $this->mock );
+		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'getByTag' )
 			->with( $this->equalTo( '1-key' ) )->will( $this->returnValue( array( '1-key' => 'value' ) ) );
@@ -176,7 +177,7 @@ class MW_Cache_FlowTest extends PHPUnit_Framework_TestCase
 
 	public function testSetWithSiteId()
 	{
-		$object = new MW_Cache_Flow( array( 'siteid' => 1 ), $this->mock );
+		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'set' )
 			->with(
@@ -203,7 +204,7 @@ class MW_Cache_FlowTest extends PHPUnit_Framework_TestCase
 
 	public function testSetListWithSiteId()
 	{
-		$object = new MW_Cache_Flow( array( 'siteid' => 1 ), $this->mock );
+		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'set' )
 			->with(

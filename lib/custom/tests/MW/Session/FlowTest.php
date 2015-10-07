@@ -6,10 +6,13 @@
  */
 
 
+namespace Aimeos\MW\Session;
+
+
 /**
- * Test class for MW_Session_Flow.
+ * Test class for \Aimeos\MW\Session\Flow.
  */
-class MW_Session_FlowTest extends PHPUnit_Framework_TestCase
+class FlowTest extends \PHPUnit_Framework_TestCase
 {
 	private $object;
 
@@ -29,7 +32,7 @@ class MW_Session_FlowTest extends PHPUnit_Framework_TestCase
 		$session = new \TYPO3\Flow\Session\TransientSession();
 		$session->start();
 
-		$this->object = new MW_Session_Flow( $session );
+		$this->object = new \Aimeos\MW\Session\Flow( $session );
 	}
 
 

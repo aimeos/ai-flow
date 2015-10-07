@@ -8,14 +8,17 @@
  */
 
 
+namespace Aimeos\MW\Session;
+
+
 /**
  * Implementation using Flow sessions.
  *
  * @package MW
  * @subpackage Session
  */
-class MW_Session_Flow
-	implements MW_Session_Interface
+class Flow
+	implements \Aimeos\MW\Session\Iface
 {
 	private $object;
 
@@ -23,9 +26,9 @@ class MW_Session_Flow
 	/**
 	 * Initializes the object.
 	 *
-	 * @param TYPO3\Flow\Session\SessionInterface $object Flow session object
+	 * @param \TYPO3\Flow\Session\SessionInterface $object Flow session object
 	 */
-	public function __construct( TYPO3\Flow\Session\SessionInterface $object )
+	public function __construct( \TYPO3\Flow\Session\SessionInterface $object )
 	{
 		$this->object = $object;
 	}

@@ -6,10 +6,13 @@
  */
 
 
+namespace Aimeos\MW\Logger;
+
+
 /**
- * Test class for MW_Logger_Flow.
+ * Test class for \Aimeos\MW\Logger\Flow.
  */
-class MW_Logger_FlowTest extends PHPUnit_Framework_TestCase
+class FlowTest extends \PHPUnit_Framework_TestCase
 {
 	private $object;
 
@@ -33,7 +36,7 @@ class MW_Logger_FlowTest extends PHPUnit_Framework_TestCase
 		$log = new \TYPO3\Flow\Log\Logger();
 		$log->addBackend( $be );
 
-		$this->object = new MW_Logger_Flow( $log );
+		$this->object = new \Aimeos\MW\Logger\Flow( $log );
 	}
 
 
@@ -52,27 +55,27 @@ class MW_Logger_FlowTest extends PHPUnit_Framework_TestCase
 	public function testLog()
 	{
 		$this->object->log( 'error' );
-		$this->assertRegExp( '/^[^ ]+ [^ ]+ [0-9]+[ ]+ERROR[ ]+error/', file_get_contents( 'flow.log' ) );
+		$this->assertRegExp( '/^[^ ]+ [^ ]+ [0-9]+[ ]+ERROR[ ]+MW[ ]+error/', file_get_contents( 'flow.log' ) );
 	}
 
 
 	public function testNonScalarLog()
 	{
 		$this->object->log( array( 'error', 'error2', 2 ) );
-		$this->assertRegExp( '/^[^ ]+ [^ ]+ [0-9]+[ ]+ERROR[ ]+\["error","error2",2\]/', file_get_contents( 'flow.log' ) );
+		$this->assertRegExp( '/^[^ ]+ [^ ]+ [0-9]+[ ]+ERROR[ ]+MW[ ]+\["error","error2",2\]/', file_get_contents( 'flow.log' ) );
 	}
 
 
 	public function testLogDebug()
 	{
-		$this->object->log( 'debug', MW_Logger_Abstract::DEBUG );
+		$this->object->log( 'debug', \Aimeos\MW\Logger\Base::DEBUG );
 		$this->assertEquals( '', file_get_contents( 'flow.log' ) );
 	}
 
 
 	public function testBadPriority()
 	{
-		$this->setExpectedException( 'MW_Logger_Exception' );
+		$this->setExpectedException( '\\Aimeos\\MW\\Logger\\Exception' );
 		$this->object->log( 'error', -1 );
 	}
 }

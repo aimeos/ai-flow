@@ -8,15 +8,18 @@
  */
 
 
+namespace Aimeos\MW\View\Helper\Url;
+
+
 /**
  * View helper class for generating URLs using the Flow URI builder.
  *
  * @package MW
  * @subpackage View
  */
-class MW_View_Helper_Url_Flow
-	extends MW_View_Helper_Abstract
-	implements MW_View_Helper_Interface
+class Flow
+	extends \Aimeos\MW\View\Helper\Base
+	implements \Aimeos\MW\View\Helper\Iface
 {
 	private $builder;
 
@@ -24,7 +27,7 @@ class MW_View_Helper_Url_Flow
 	/**
 	 * Initializes the URL view helper.
 	 *
-	 * @param MW_View_Interface $view View instance with registered view helpers
+	 * @param \Aimeos\MW\View\Iface $view View instance with registered view helpers
 	 * @param \TYPO3\Flow\Mvc\Routing\UriBuilder $builder Flow URI builder object
 	 */
 	public function __construct( $view, \TYPO3\Flow\Mvc\Routing\UriBuilder $builder )

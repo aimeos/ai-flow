@@ -2,11 +2,12 @@ sudo: false
 language: php
 
 php:
-  - "hhvm"
-  - "5.6"
-  - "5.5"
-  - "5.4"
-  - "5.3"
+  - hhvm
+  - 7.0
+  - 5.6
+  - 5.5
+  - 5.4
+  - 5.3
 
 env:
   - FLOW_VERSION=2.2.*

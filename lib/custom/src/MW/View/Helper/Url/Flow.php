@@ -29,12 +29,14 @@ class Flow
 	 *
 	 * @param \Aimeos\MW\View\Iface $view View instance with registered view helpers
 	 * @param \TYPO3\Flow\Mvc\Routing\UriBuilder $builder Flow URI builder object
+	 * @param array Associative list of fixed parameters that should be available for all routes
 	 */
-	public function __construct( $view, \TYPO3\Flow\Mvc\Routing\UriBuilder $builder )
+	public function __construct( $view, \TYPO3\Flow\Mvc\Routing\UriBuilder $builder, array $fixed )
 	{
 		parent::__construct( $view );
 
 		$this->builder = $builder;
+		$this->fixed = $fixed;
 	}
 
 
@@ -59,14 +61,9 @@ class Flow
 			->setCreateAbsoluteUri( $values['absoluteUri'] )
 			->setFormat( $values['format'] );
 
-		// Slashes in URL parameters confuses the builder
-		foreach( $params as $key => $value ) {
-			$params[$key] = str_replace( '/', '_', $value );
-		}
-
 		$params['node'] = $target;
 
-		return $this->builder->uriFor( $action, $params, $controller, $values['package'], $values['subpackage'] );
+		return $this->builder->uriFor( $action, $params + $this->fixed, $controller, $values['package'], $values['subpackage'] );
 	}
 
 

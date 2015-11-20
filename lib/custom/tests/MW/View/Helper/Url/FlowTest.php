@@ -61,7 +61,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 		$property->setAccessible( true );
 		$property->setValue( $builder, $mockEnv );
 
-		$this->object = new \Aimeos\MW\View\Helper\Url\Flow( $view, $builder );
+		$this->object = new \Aimeos\MW\View\Helper\Url\Flow( $view, $builder, array( 'site' => 'unittest' ) );
 	}
 
 

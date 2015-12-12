@@ -19,7 +19,7 @@ namespace Aimeos\MW\View\Helper\Url;
  */
 class Flow
 	extends \Aimeos\MW\View\Helper\Base
-	implements \Aimeos\MW\View\Helper\Iface
+	implements \Aimeos\MW\View\Helper\Url\Iface
 {
 	private $builder;
 

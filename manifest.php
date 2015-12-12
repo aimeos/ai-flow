@@ -8,13 +8,9 @@
 return array(
 	'name' => 'ai-flow',
 	'depends' => array(
-		'docs-core',
+		'aimeos-core',
 	),
 	'include' => array(
 		'lib/custom/src',
-	),
-	'config' => array(
-	),
-	'setup' => array(
 	),
 );

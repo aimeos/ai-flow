@@ -73,4 +73,12 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->assertEquals( null, $this->object->transform()->getTarget() );
 	}
+
+
+	public function testGetUploadedFiles()
+	{
+		$files = $this->object->transform()->getUploadedFiles();
+
+		$this->assertEquals( array(), $files );
+	}
 }

@@ -18,10 +18,11 @@ namespace Aimeos\MW\View\Helper\Request;
  * @subpackage View
  */
 class Flow
-	extends \Aimeos\MW\View\Helper\Base
+	extends \Aimeos\MW\View\Helper\Request\Standard
 	implements \Aimeos\MW\View\Helper\Request\Iface
 {
 	private $request;
+	private $files;
 
 
 	/**
@@ -29,12 +30,14 @@ class Flow
 	 *
 	 * @param \\Aimeos\MW\View\Iface $view View instance with registered view helpers
 	 * @param \TYPO3\Flow\Http\Request $request Flow request object
+	 * @param array $files Uploaded files from $_FILES
 	 */
-	public function __construct( \Aimeos\MW\View\Iface $view, \TYPO3\Flow\Http\Request $request )
+	public function __construct( \Aimeos\MW\View\Iface $view, \TYPO3\Flow\Http\Request $request, array $files )
 	{
-		parent::__construct( $view );
+		\Aimeos\MW\View\Helper\Base::__construct( $view );
 
 		$this->request = $request;
+		$this->files = $files;
 	}
 
 
@@ -79,5 +82,23 @@ class Flow
 	public function getTarget()
 	{
 		return null;
+	}
+
+
+	/**
+	 * Retrieve normalized file upload data.
+	 *
+	 * This method returns upload metadata in a normalized tree, with each leaf
+	 * an instance of Psr\Http\Message\UploadedFileInterface.
+	 *
+	 * These values MAY be prepared from $_FILES or the message body during
+	 * instantiation, or MAY be injected via withUploadedFiles().
+	 *
+	 * @return array An array tree of UploadedFileInterface instances; an empty
+	 *     array MUST be returned if no data is present.
+	 */
+	public function getUploadedFiles()
+	{
+		return $this->createUploadedFiles( $this->files );
 	}
 }

@@ -78,4 +78,23 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 		$this->setExpectedException( '\\Aimeos\\MW\\Logger\\Exception' );
 		$this->object->log( 'error', -1 );
 	}
+
+
+	public function testLogPriorityTranslate()
+	{
+		$this->object->log( '', \Aimeos\MW\Logger\Base::EMERG );
+		$this->object->log( '', \Aimeos\MW\Logger\Base::ALERT );
+		$this->object->log( '', \Aimeos\MW\Logger\Base::CRIT );
+		$this->object->log( '', \Aimeos\MW\Logger\Base::ERR );
+		$this->object->log( '', \Aimeos\MW\Logger\Base::WARN );
+		$this->object->log( '', \Aimeos\MW\Logger\Base::NOTICE );
+		$this->object->log( '', \Aimeos\MW\Logger\Base::INFO );
+		$this->object->log( '', \Aimeos\MW\Logger\Base::DEBUG );
+
+		$content = file_get_contents( 'flow.log' );
+		$this->assertContains( 'EMERGENCY', $content );
+		$this->assertContains( 'ALERT', $content );
+		$this->assertContains( 'CRITICAL', $content );
+		$this->assertContains( 'ERROR', $content );
+	}
 }

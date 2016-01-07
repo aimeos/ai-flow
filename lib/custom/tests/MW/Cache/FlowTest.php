@@ -115,6 +115,15 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 	}
 
 
+	public function testGetDefault()
+	{
+		$this->mock->expects( $this->once() )->method( 'get' )
+		->with( $this->equalTo( 'key' ) )->will( $this->returnValue( false ) );
+
+		$this->assertEquals( 'default', $this->object->get( 'key', 'default' ) );
+	}
+
+
 	public function testGetWithSiteId()
 	{
 		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );

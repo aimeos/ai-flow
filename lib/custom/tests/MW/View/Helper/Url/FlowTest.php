@@ -123,4 +123,16 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals( 'http://localhost/index.php/shop/catalog/lists', $result );
 	}
+
+
+	public function testTransformConfig()
+	{
+		$this->mockRouter->expects( $this->once() )->method( 'resolve' )
+			->will( $this->returnValue( 'shop/catalog/lists') );
+
+		$options = array( 'package' => 'test', 'subpackage' => 'subtest', 'format' => 'fmt' );
+		$result = $this->object->transform( 'shop', 'catalog', 'lists', array(), array(), $options );
+
+		$this->assertEquals( '/index.php/shop/catalog/lists', $result );
+	}
 }

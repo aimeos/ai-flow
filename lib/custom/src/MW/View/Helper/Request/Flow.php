@@ -99,6 +99,12 @@ class Flow
 	 */
 	public function getUploadedFiles()
 	{
-		return $this->createUploadedFiles( $this->files );
+		$list = array();
+
+		foreach( $this->files as $name => $array ) {
+			$list[$name] = $this->createUploadedFiles( $array );
+		}
+
+		return $list;
 	}
 }

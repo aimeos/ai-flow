@@ -10,11 +10,12 @@ php:
   - 5.3
 
 env:
-  - FLOW_VERSION=2.2.*
   - FLOW_VERSION=2.3.*
+  - FLOW_VERSION=3.0.*
+  - FLOW_VERSION=3.1.*
 
 before_script:
-  - git clone --depth=50 --branch=master git://github.com/aimeos/aimeos-core.git ../aimeos-core
+  - git clone --depth=50 --branch=dev-master git://github.com/aimeos/aimeos-core.git ../aimeos-core
   - cd ../aimeos-core
   - mv ../ai-flow ext/
   - composer require "typo3/flow:${FLOW_VERSION}"

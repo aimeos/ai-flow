@@ -10,8 +10,9 @@ php:
   - 5.3
 
 env:
-  - FLOW_VERSION=2.2.*
   - FLOW_VERSION=2.3.*
+  - FLOW_VERSION=3.0.*
+  - FLOW_VERSION=3.1.*
 
 before_script:
   - git clone --depth=50 --branch=master git://github.com/aimeos/aimeos-core.git ../aimeos-core
@@ -23,4 +24,16 @@ script: "vendor/bin/phing -Ddir=ext/ai-flow coverageext checkext"
 
 after_success:
   - php vendor/bin/coveralls -c ext/ai-flow/.coveralls.yml
+
+matrix:
+  fast_finish: true
+  exclude:
+    - php: 5.3
+      env: "FLOW_VERSION=3.0.*"
+    - php: 5.3
+      env: "FLOW_VERSION=3.1.*"
+    - php: 5.4
+      env: "FLOW_VERSION=3.0.*"
+    - php: 5.4
+      env: "FLOW_VERSION=3.1.*"
 

@@ -45,7 +45,7 @@ class Flow
 		$this->request = $request;
 		$psr7request = $this->createRequest( $request, $files, $query, $post, $cookies, $server );
 
-		\Aimeos\MW\View\Helper\Base::__construct( $view, $psr7request );
+		parent::__construct( $view, $psr7request );
 	}
 
 

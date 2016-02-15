@@ -2,7 +2,7 @@
 
 /**
  * @license LGPLv3, http://opensource.org/licenses/LGPL-3.0
- * @copyright Aimeos (aimeos.org), 2015
+ * @copyright Aimeos (aimeos.org), 2015-2016
  * @package MW
  * @subpackage View
  */
@@ -10,9 +10,13 @@
 
 namespace Aimeos\MW\View\Helper\Request;
 
+use Zend\Diactoros\ServerRequestFactory;
+use Zend\Diactoros\ServerRequest;
+use Zend\Diactoros\Stream;
+
 
 /**
- * View helper class for generating URLs using the Laravel 5 URL builder.
+ * View helper class for accessing request data from Flow
  *
  * @package MW
  * @subpackage View
@@ -22,7 +26,6 @@ class Flow
 	implements \Aimeos\MW\View\Helper\Request\Iface
 {
 	private $request;
-	private $files;
 
 
 	/**
@@ -30,36 +33,19 @@ class Flow
 	 *
 	 * @param \\Aimeos\MW\View\Iface $view View instance with registered view helpers
 	 * @param \TYPO3\Flow\Http\Request $request Flow request object
-	 * @param array $files Uploaded files from $_FILES
+	 * @param array $files List of uploaded files like in $_FILES
+	 * @param array $query List of uploaded files like in $_GET
+	 * @param array $post List of uploaded files like in $_POST
+	 * @param array $cookies List of uploaded files like in $_COOKIES
+	 * @param array $server List of uploaded files like in $_SERVER
 	 */
-	public function __construct( \Aimeos\MW\View\Iface $view, \TYPO3\Flow\Http\Request $request, array $files )
+	public function __construct( \Aimeos\MW\View\Iface $view, \TYPO3\Flow\Http\Request $request, array $files = array(),
+		array $query = array(), array $post = array(), array $cookies = array(), array $server = array() )
 	{
-		\Aimeos\MW\View\Helper\Base::__construct( $view );
-
 		$this->request = $request;
-		$this->files = $files;
-	}
+		$psr7request = $this->createRequest( $request, $files, $query, $post, $cookies, $server );
 
-
-	/**
-	 * Returns the request view helper.
-	 *
-	 * @return \Aimeos\MW\View\Helper\Iface Request view helper
-	 */
-	public function transform()
-	{
-		return $this;
-	}
-
-
-	/**
-	 * Returns the request body.
-	 *
-	 * @return string Request body
-	 */
-	public function getBody()
-	{
-		return $this->request->getContent();
+		\Aimeos\MW\View\Helper\Base::__construct( $view, $psr7request );
 	}
 
 
@@ -86,25 +72,28 @@ class Flow
 
 
 	/**
-	 * Retrieve normalized file upload data.
+	 * Creates a PSR-7 compatible request
 	 *
-	 * This method returns upload metadata in a normalized tree, with each leaf
-	 * an instance of Psr\Http\Message\UploadedFileInterface.
-	 *
-	 * These values MAY be prepared from $_FILES or the message body during
-	 * instantiation, or MAY be injected via withUploadedFiles().
-	 *
-	 * @return array An array tree of UploadedFileInterface instances; an empty
-	 *     array MUST be returned if no data is present.
+	 * @param \TYPO3\Flow\Http\Request $nativeRequest Flow request object
+	 * @param array $files List of uploaded files like in $_FILES
+	 * @param array $query List of uploaded files like in $_GET
+	 * @param array $post List of uploaded files like in $_POST
+	 * @param array $cookies List of uploaded files like in $_COOKIES
+	 * @param array $server List of uploaded files like in $_SERVER
+	 * @return \Psr\Http\Message\ServerRequestInterface PSR-7 request object
 	 */
-	public function getUploadedFiles()
+	protected function createRequest( \TYPO3\Flow\Http\Request $nativeRequest, array $files,
+		array $query, array $post, array $cookies, array $server )
 	{
-		$list = array();
+		$server = ServerRequestFactory::normalizeServer( $server );
+		$files = ServerRequestFactory::normalizeFiles( $files );
+		$headers = $nativeRequest->getHeaders()->getAll();
+		$uri = (string) $nativeRequest->getUri();
+		$method = $nativeRequest->getMethod();
 
-		foreach( $this->files as $name => $array ) {
-			$list[$name] = $this->createUploadedFiles( $array );
-		}
+		$body = new Stream('php://temp', 'wb+');
+		$body->write( $nativeRequest->getContent() );
 
-		return $list;
+		return new ServerRequest( $server, $files, $uri, $method, $body, $headers, $cookies, $query, $post );
 	}
 }

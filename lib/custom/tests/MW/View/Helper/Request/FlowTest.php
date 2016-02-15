@@ -5,40 +5,30 @@ namespace Aimeos\MW\View\Helper\Request;
 
 /**
  * @license LGPLv3, http://opensource.org/licenses/LGPL-3.0
- * @copyright Aimeos (aimeos.org), 2015
+ * @copyright Aimeos (aimeos.org), 2015-2016
  */
 class FlowTest extends \PHPUnit_Framework_TestCase
 {
 	private $object;
-	private $mock;
 
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @access protected
-	 */
 	protected function setUp()
 	{
 		if( !class_exists( '\TYPO3\Flow\Http\Request' ) ) {
 			$this->markTestSkipped( '\TYPO3\Flow\Http\Request is not available' );
 		}
 
-		$this->mock = $this->getMockBuilder( '\TYPO3\Flow\Http\Request' )
-			->setConstructorArgs( array( array(), array(), array(), array() ) )->getMock();
+		if( !class_exists( '\Zend\Diactoros\ServerRequestFactory' ) ) {
+			$this->markTestSkipped( '\Zend\Diactoros\ServerRequestFactory is not available' );
+		}
 
 		$view = new \Aimeos\MW\View\Standard();
-		$this->object = new \Aimeos\MW\View\Helper\Request\Flow( $view, $this->mock, array() );
+		$server = array( 'REMOTE_ADDR' => '127.0.0.1' );
+		$request = new \TYPO3\Flow\Http\Request( array(), array(), array(), $server );
+		$this->object = new \Aimeos\MW\View\Helper\Request\Flow( $view, $request, array(), array(), array(), array(), $server );
 	}
 
 
-	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 *
-	 * @access protected
-	 */
 	protected function tearDown()
 	{
 		unset( $this->object, $this->mock );
@@ -47,38 +37,18 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 
 	public function testTransform()
 	{
-		$this->assertInstanceOf( '\\Aimeos\\MW\\View\\Helper\\Request\\Flow', $this->object->transform() );
-	}
-
-
-	public function testGetBody()
-	{
-		$this->mock->expects( $this->once() )->method( 'getContent' )
-			->will( $this->returnValue( 'body' ) );
-
-		$this->assertEquals( 'body', $this->object->transform()->getBody() );
+		$this->assertInstanceOf( '\Aimeos\MW\View\Helper\Request\Flow', $this->object->transform() );
 	}
 
 
 	public function testGetClientAddress()
 	{
-		$this->mock->expects( $this->once() )->method( 'getClientIpAddress' )
-			->will( $this->returnValue( '127.0.0.1' ) );
-
-		$this->assertEquals( '127.0.0.1', $this->object->transform()->getClientAddress() );
+		$this->assertEquals( '127.0.0.1', $this->object->getClientAddress() );
 	}
 
 
 	public function testGetTarget()
 	{
-		$this->assertEquals( null, $this->object->transform()->getTarget() );
-	}
-
-
-	public function testGetUploadedFiles()
-	{
-		$files = $this->object->transform()->getUploadedFiles();
-
-		$this->assertEquals( array(), $files );
+		$this->assertEquals( null, $this->object->getTarget() );
 	}
 }

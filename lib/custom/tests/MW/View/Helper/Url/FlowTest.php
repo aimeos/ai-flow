@@ -40,7 +40,8 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 			->method( 'getBaseUri' )
 			->will( $this->returnValue( 'http://localhost/' ) );
 
-		$mockMainRequest = $this->getMock( 'TYPO3\Flow\Mvc\ActionRequest', array( 'getControllerObjectName' ), array( $mockHttpRequest ) );
+		$mockMainRequest = $this->getMock( 'TYPO3\Flow\Mvc\ActionRequest',
+			array( 'getControllerObjectName', 'getArgumentNamespace' ), array( $mockHttpRequest ) );
 		$mockMainRequest->expects( $this->any() )
 			->method( 'getArgumentNamespace' )
 			->will( $this->returnValue( 'ai' ) );

@@ -18,7 +18,7 @@ namespace Aimeos\MW\View\Helper\Url;
  * @subpackage View
  */
 class Flow
-	extends \Aimeos\MW\View\Helper\Base
+	extends \Aimeos\MW\View\Helper\Url\Base
 	implements \Aimeos\MW\View\Helper\Url\Iface
 {
 	private $builder;
@@ -53,6 +53,7 @@ class Flow
 	 */
 	public function transform( $target = null, $controller = null, $action = null, array $params = array(), array $trailing = array(), array $config = array() )
 	{
+		$params = $this->sanitize( $params );
 		$values = $this->getValues( $config );
 
 		$this->builder

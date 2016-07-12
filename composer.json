@@ -17,6 +17,7 @@
 		"php": ">=5.3.3",
 		"typo3/flow": "~2.0||~3.0",
 		"composer/installers": "^1.0",
+		"aimeos/aimeos-core": "2016.07.*",
 		"zendframework/zend-diactoros": "~1.0"
 	},
 	"autoload": {

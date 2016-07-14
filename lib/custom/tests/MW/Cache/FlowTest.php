@@ -25,7 +25,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 			$this->markTestSkipped( 'Class \\TYPO3\\Flow\\Cache\\Frontend\\FrontendInterface not found' );
 		}
 
-		$this->mock = $this->getMock( 'TYPO3\Flow\Cache\Frontend\FrontendInterface' );
+		$this->mock = $this->getMockBuilder( 'TYPO3\Flow\Cache\Frontend\FrontendInterface' )->getMock();
 		$this->object = new \Aimeos\MW\Cache\Flow( array(), $this->mock );
 	}
 

@@ -46,7 +46,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 			->method( 'getArgumentNamespace' )
 			->will( $this->returnValue( 'ai' ) );
 
-		$this->mockRouter = $this->getMock( 'TYPO3\Flow\Mvc\Routing\Router' );
+		$this->mockRouter = $this->getMockBuilder( 'TYPO3\Flow\Mvc\Routing\Router' )->getMock();
 		$mockEnv = $this->getMock( 'TYPO3\Flow\Utility\Environment', array( 'isRewriteEnabled' ), array(), '', false );
 
 		$builder = new \TYPO3\Flow\Mvc\Routing\UriBuilder();

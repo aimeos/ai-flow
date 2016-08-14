@@ -33,21 +33,26 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 		$view = new \Aimeos\MW\View\Standard();
 
 		$mockHttpRequest = $this->getMockBuilder( 'TYPO3\Flow\Http\Request' )
-			->disableOriginalConstructor()
 			->setMethods( array( 'getBaseUri' ) )
+			->disableOriginalConstructor()
 			->getMock();
 		$mockHttpRequest->expects( $this->any() )
 			->method( 'getBaseUri' )
 			->will( $this->returnValue( 'http://localhost/' ) );
 
-		$mockMainRequest = $this->getMock( 'TYPO3\Flow\Mvc\ActionRequest',
-			array( 'getControllerObjectName', 'getArgumentNamespace' ), array( $mockHttpRequest ) );
+		$mockMainRequest = $this->getMockBuilder( 'TYPO3\Flow\Mvc\ActionRequest' )
+			->setMethods( array( 'getControllerObjectName', 'getArgumentNamespace' ) )
+			->setConstructorArgs( array( $mockHttpRequest ) )
+			->getMock();
 		$mockMainRequest->expects( $this->any() )
 			->method( 'getArgumentNamespace' )
 			->will( $this->returnValue( 'ai' ) );
 
 		$this->mockRouter = $this->getMockBuilder( 'TYPO3\Flow\Mvc\Routing\Router' )->getMock();
-		$mockEnv = $this->getMock( 'TYPO3\Flow\Utility\Environment', array( 'isRewriteEnabled' ), array(), '', false );
+		$mockEnv = $this->getMockBuilder( 'TYPO3\Flow\Utility\Environment' )
+			->setMethods( array( 'isRewriteEnabled' ) )
+			->disableOriginalConstructor()
+			->getMock();
 
 		$builder = new \TYPO3\Flow\Mvc\Routing\UriBuilder();
 		$builder->setRequest( $mockMainRequest );

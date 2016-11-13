@@ -28,12 +28,11 @@ after_success:
 matrix:
   fast_finish: true
   exclude:
-    - php: 5.3
-      env: "FLOW_VERSION=3.0.*"
-    - php: 5.3
-      env: "FLOW_VERSION=3.1.*"
     - php: 5.4
       env: "FLOW_VERSION=3.0.*"
     - php: 5.4
       env: "FLOW_VERSION=3.1.*"
-
+    - php: 5.4
+      env: "FLOW_VERSION=3.2.*"
+    - php: 5.4
+      env: "FLOW_VERSION=3.3.*"

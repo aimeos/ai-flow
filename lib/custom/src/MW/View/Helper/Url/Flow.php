@@ -77,7 +77,7 @@ class Flow
 	protected function getValues( array $config )
 	{
 		$values = array(
-			'package' => null,
+			'package' => 'Aimeos.Shop',
 			'subpackage' => null,
 			'absoluteUri' => false,
 			'format' => 'html',

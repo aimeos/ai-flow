@@ -1,24 +1,20 @@
 <?php
 
-namespace Aimeos\MW\Cache;
-
-
 /**
  * @license LGPLv3, http://opensource.org/licenses/LGPL-3.0
  * @copyright Aimeos (aimeos.org), 2014-2016
  */
+
+
+namespace Aimeos\MW\Cache;
+
+
 class FlowTest extends \PHPUnit_Framework_TestCase
 {
 	private $object;
 	private $mock;
 
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @access protected
-	 */
 	protected function setUp()
 	{
 		if( interface_exists( 'TYPO3\Flow\Cache\Frontend\FrontendInterface' ) === false ) {
@@ -30,12 +26,6 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 	}
 
 
-	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 *
-	 * @access protected
-	 */
 	protected function tearDown()
 	{
 		unset( $this->mock, $this->object );
@@ -58,19 +48,19 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 	}
 
 
-	public function testDeleteList()
+	public function testDeleteMultiple()
 	{
 		$this->mock->expects( $this->exactly( 2 ) )->method( 'remove' )->with( $this->equalTo( 'key' ) );
-		$this->object->deleteList( array( 'key', 'key' ) );
+		$this->object->deleteMultiple( array( 'key', 'key' ) );
 	}
 
 
-	public function testDeleteListWithSiteId()
+	public function testDeleteMultipleWithSiteId()
 	{
 		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'remove' )->with( $this->equalTo( '1-key' ) );
-		$object->deleteList( array( 'key' ) );
+		$object->deleteMultiple( array( 'key' ) );
 	}
 
 
@@ -90,19 +80,19 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 	}
 
 
-	public function testFlush()
+	public function testClear()
 	{
 		$this->mock->expects( $this->once() )->method( 'flush' );
-		$this->object->flush();
+		$this->object->clear();
 	}
 
 
-	public function testFlushWithSiteId()
+	public function testClearWithSiteId()
 	{
 		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'flushByTag' )->with( $this->equalTo( '1-siteid' ) );
-		$object->flush();
+		$object->clear();
 	}
 
 
@@ -133,42 +123,42 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 	}
 
 
-	public function testGetList()
+	public function testGetMultiple()
 	{
 		$this->mock->expects( $this->exactly( 2 ) )->method( 'get' )
 			->will( $this->returnValue( 'value' ) );
 
 		$expected = array( 'key1' => 'value', 'key2' => 'value' );
-		$this->assertEquals( $expected, $this->object->getList( array( 'key1', 'key2' ) ) );
+		$this->assertEquals( $expected, $this->object->getMultiple( array( 'key1', 'key2' ) ) );
 	}
 
 
-	public function testGetListWithSiteId()
+	public function testGetMultipleWithSiteId()
 	{
 		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'get' )->with( $this->equalTo( '1-key' ) );
-		$object->getList( array( 'key' ) );
+		$object->getMultiple( array( 'key' ) );
 	}
 
 
-	public function testGetListByTags()
+	public function testGetMultipleByTags()
 	{
 		$this->mock->expects( $this->exactly( 2 ) )->method( 'getByTag' )
 			->with( $this->equalTo( 'key' ) )->will( $this->returnValue( array( 'key' => 'value' ) ) );
 
-		$this->assertEquals( array( 'key' => 'value' ), $this->object->getListByTags( array( 'key', 'key' ) ) );
+		$this->assertEquals( array( 'key' => 'value' ), $this->object->getMultipleByTags( array( 'key', 'key' ) ) );
 	}
 
 
-	public function testGetListByTagsWithSiteId()
+	public function testGetMultipleByTagsWithSiteId()
 	{
 		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'getByTag' )
 			->with( $this->equalTo( '1-key' ) )->will( $this->returnValue( array( '1-key' => 'value' ) ) );
 
-		$this->assertEquals( array( 'key' => 'value' ), $object->getListByTags( array( 'key' ) ) );
+		$this->assertEquals( array( 'key' => 'value' ), $object->getMultipleByTags( array( 'key' ) ) );
 	}
 
 
@@ -180,7 +170,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo( array( 'tag' ) ), $this->greaterThan( 0 )
 			);
 
-		$this->object->set( 'key', 'value', array( 'tag' ), '2000-01-01 00:00:00' );
+		$this->object->set( 'key', 'value', '2100-01-01 00:00:00', array( 'tag' ) );
 	}
 
 
@@ -194,11 +184,11 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo( array( '1-siteid', '1-tag' ) ), $this->equalTo( null )
 			);
 
-		$object->set( 'key', 'value', array( 'tag' ), null );
+		$object->set( 'key', 'value', null, array( 'tag' ) );
 	}
 
 
-	public function testSetList()
+	public function testSetMultiple()
 	{
 		$this->mock->expects( $this->once() )->method( 'set' )
 			->with(
@@ -206,12 +196,12 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo( array( 'tag' ) ), $this->greaterThan( 0 )
 			);
 
-		$expires = array( 'key' => '2000-01-01 00:00:00' );
-		$this->object->setList( array( 'key' => 'value' ), array( 'key' => array( 'tag' ) ), $expires );
+		$expires = array( 'key' => '2100-01-01 00:00:00' );
+		$this->object->setMultiple( array( 'key' => 'value' ), $expires, array( 'key' => array( 'tag' ) ) );
 	}
 
 
-	public function testSetListWithSiteId()
+	public function testSetMultipleWithSiteId()
 	{
 		$object = new \Aimeos\MW\Cache\Flow( array( 'siteid' => 1 ), $this->mock );
 
@@ -221,7 +211,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo( array( '1-siteid', '1-tag' ) ), $this->equalTo( null )
 			);
 
-		$object->setList( array( 'key' => 'value' ), array( 'key' => array( 'tag' ) ), array() );
+		$object->setMultiple( array( 'key' => 'value' ), null, array( 'key' => array( 'tag' ) ) );
 	}
 
 }

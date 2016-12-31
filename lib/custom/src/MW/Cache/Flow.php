@@ -56,10 +56,10 @@ class Flow
 	 *
 	 * @inheritDoc
 	 *
-	 * @param string[] $keys List of key strings that identify the cache entries
+	 * @param \Traversable|array $keys List of key strings that identify the cache entries
 	 * 	that should be removed
 	 */
-	public function deleteList( array $keys )
+	public function deleteMultiple( $keys )
 	{
 		foreach( $keys as $key ) {
 			$this->object->remove( $this->prefix . $key );
@@ -88,7 +88,7 @@ class Flow
 	 *
 	 * @inheritDoc
 	 */
-	public function flush()
+	public function clear()
 	{
 		if( $this->prefix ) {
 			$this->object->flushByTag( $this->prefix . 'siteid' );
@@ -122,12 +122,14 @@ class Flow
 	 *
 	 * @inheritDoc
 	 *
-	 * @param string[] $keys List of key strings for the requested cache entries
+	 * @param \Traversable|array $keys List of key strings for the requested cache entries
+	 * @param mixed $default Default value to return for keys that do not exist
 	 * @return array Associative list of key/value pairs for the requested cache
 	 * 	entries. If a cache entry doesn't exist, neither its key nor a value
 	 * 	will be in the result list
+	 * @throws \Aimeos\MW\Cache\Exception If the cache server doesn't respond
 	 */
-	public function getList( array $keys )
+	public function getMultiple( $keys, $default = null )
 	{
 		$result = array();
 
@@ -135,6 +137,8 @@ class Flow
 		{
 			if( ( $entry = $this->object->get( $this->prefix . $key ) ) !== false ) {
 				$result[$key] = $entry;
+			} else {
+				$result[$key] = $default;
 			}
 		}
 
@@ -152,7 +156,7 @@ class Flow
 	 * 	entries. If a tag isn't associated to any cache entry, nothing is returned
 	 * 	for that tag
 	 */
-	public function getListByTags( array $tags )
+	public function getMultipleByTags( array $tags )
 	{
 		$result = array();
 		$len = strlen( $this->prefix );
@@ -181,17 +185,15 @@ class Flow
 	 *
 	 * @param string $name Key string for the given value like product/id/123
 	 * @param mixed $value Value string that should be stored for the given key
+	 * @param int|string|null $expires Date/time string in "YYYY-MM-DD HH:mm:ss"
+	 * 	format when the cache entry expires
 	 * @param array $tags List of tag strings that should be assoicated to the
 	 * 	given value in the cache
-	 * @param string|null $expires Date/time string in "YYYY-MM-DD HH:mm:ss"
-	 * 	format when the cache entry expires
 	 */
-	public function set( $name, $value, array $tags = array(), $expires = null )
+	public function set( $key, $value, $expires = null, array $tags = array() )
 	{
-		if( $expires !== null && ( $timestamp = strtotime( $expires ) ) !== false ) {
-			$expires = $timestamp;
-		} else {
-			$expires = null;
+		if( is_string( $expires ) ) {
+			$expires = date_create( $expires )->getTimestamp() - time();
 		}
 
 		$tagList = ( $this->prefix ? array( $this->prefix . 'siteid' ) : array() );
@@ -200,7 +202,7 @@ class Flow
 			$tagList[] = $this->prefix . $tag;
 		}
 
-		$this->object->set( $this->prefix . $name, $value, $tagList, $expires );
+		$this->object->set( $this->prefix . $key, $value, $tagList, $expires );
 	}
 
 
@@ -210,21 +212,24 @@ class Flow
 	 *
 	 * @inheritDoc
 	 *
-	 * @param array $pairs Associative list of key/value pairs. Both must be
+	 * @param \Traversable|array $pairs Associative list of key/value pairs. Both must be
 	 * 	a string
-	 * @param array $tags Associative list of key/tag or key/tags pairs that should be
-	 * 	associated to the values identified by their key. The value associated
-	 * 	to the key can either be a tag string or an array of tag strings
-	 * @param array $expires Associative list of key/datetime pairs.
+	 * @param array|int|string|null $expires Associative list of keys and datetime
+	 *  string or integer TTL pairs.
+	 * @param array $tags Associative list of key/tag or key/tags pairs that
+	 *  should be associated to the values identified by their key. The value
+	 *  associated to the key can either be a tag string or an array of tag strings
+	 * @return null
+	 * @throws \Aimeos\MW\Cache\Exception If the cache server doesn't respond
 	 */
-	public function setList( array $pairs, array $tags = array(), array $expires = array() )
+	public function setMultiple( $pairs, $expires = null, array $tags = array() )
 	{
 		foreach( $pairs as $key => $value )
 		{
 			$tagList = ( isset( $tags[$key] ) ? (array) $tags[$key] : array() );
-			$keyExpire = ( isset( $expires[$key] ) ? $expires[$key] : null );
+			$keyExpire = ( isset( $expires[$key] ) ? $expires[$key] : $expires );
 
-			$this->set( $key, $value, $tagList, $keyExpire );
+			$this->set( $key, $value, $keyExpire, $tagList );
 		}
 	}
 }

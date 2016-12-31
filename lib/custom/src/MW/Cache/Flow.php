@@ -183,7 +183,7 @@ class Flow
 	 *
 	 * @inheritDoc
 	 *
-	 * @param string $name Key string for the given value like product/id/123
+	 * @param string $key Key string for the given value like product/id/123
 	 * @param mixed $value Value string that should be stored for the given key
 	 * @param int|string|null $expires Date/time string in "YYYY-MM-DD HH:mm:ss"
 	 * 	format when the cache entry expires

@@ -18,7 +18,7 @@
 		"typo3/flow": "~2.0||~3.0",
 		"composer/installers": "^1.0",
 		"zendframework/zend-diactoros": "~1.0",
-		"aimeos/aimeos-core": "dev-master"
+		"aimeos/aimeos-core": "~2017.02"
 	},
 	"autoload": {
 		"psr-4": {

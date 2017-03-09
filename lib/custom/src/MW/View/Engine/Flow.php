@@ -25,9 +25,9 @@ class Flow implements Iface
 	/**
 	 * Initializes the view object
 	 *
-	 * @param \Neos\Fluid\View\StandaloneView $view Flow template view object
+	 * @param \Neos\FluidAdaptor\View\StandaloneView $view Flow template view object
 	 */
-	public function __construct( \Neos\Fluid\View\StandaloneView $view )
+	public function __construct( \Neos\FluidAdaptor\View\StandaloneView $view )
 	{
 		$this->view = $view;
 	}

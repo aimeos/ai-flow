@@ -76,12 +76,6 @@ class TestHelper
 		$session = new \Aimeos\MW\Session\None();
 		$ctx->setSession( $session );
 
-
-		$localeManager = \Aimeos\MShop\Locale\Manager\Factory::createManager( $ctx );
-		$localeItem = $localeManager->bootstrap( $site, '', '', false );
-
-		$ctx->setLocale( $localeItem );
-
 		$ctx->setEditor( 'ai-flow:unittest' );
 
 		return $ctx;

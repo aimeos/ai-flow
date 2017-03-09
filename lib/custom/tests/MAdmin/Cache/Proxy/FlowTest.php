@@ -21,11 +21,18 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 			$this->markTestSkipped( 'Class \\Neos\\Cache\\Frontend\\StringFrontend not found' );
 		}
 
+		$localeItem = $this->getMockBuilder( '\Aimeos\MShop\Locale\Item\Standard' )
+			->setMethods( ['getSiteId'])
+			->getMock();
+
 		$this->mock = $this->getMockBuilder( 'Neos\Cache\Frontend\StringFrontend' )
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->object = new \Aimeos\MAdmin\Cache\Proxy\Flow( \TestHelper::getContext(), $this->mock );
+		$context = \TestHelper::getContext();
+		$context->setLocale( $localeItem );
+
+		$this->object = new \Aimeos\MAdmin\Cache\Proxy\Flow( $context, $this->mock );
 	}
 
 

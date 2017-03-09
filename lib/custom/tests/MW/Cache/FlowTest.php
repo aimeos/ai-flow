@@ -17,11 +17,11 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		if( interface_exists( 'TYPO3\Flow\Cache\Frontend\FrontendInterface' ) === false ) {
-			$this->markTestSkipped( 'Class \\TYPO3\\Flow\\Cache\\Frontend\\FrontendInterface not found' );
+		if( interface_exists( 'Neos\Cache\Frontend\FrontendInterface' ) === false ) {
+			$this->markTestSkipped( 'Class \\Neos\\Cache\\Frontend\\FrontendInterface not found' );
 		}
 
-		$this->mock = $this->getMockBuilder( 'TYPO3\Flow\Cache\Frontend\FrontendInterface' )->getMock();
+		$this->mock = $this->getMockBuilder( 'Neos\Cache\Frontend\FrontendInterface' )->getMock();
 		$this->object = new \Aimeos\MW\Cache\Flow( array(), $this->mock );
 	}
 

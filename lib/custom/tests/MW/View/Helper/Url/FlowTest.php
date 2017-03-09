@@ -26,13 +26,13 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		if( !class_exists( '\\TYPO3\\Flow\\Mvc\\Routing\\UriBuilder' ) ) {
-			$this->markTestSkipped( '\\TYPO3\\Flow\\Mvc\\Routing\\UriBuilder is not available' );
+		if( !class_exists( '\\Neos\\Flow\\Mvc\\Routing\\UriBuilder' ) ) {
+			$this->markTestSkipped( '\\Neos\\Flow\\Mvc\\Routing\\UriBuilder is not available' );
 		}
 
 		$view = new \Aimeos\MW\View\Standard();
 
-		$mockHttpRequest = $this->getMockBuilder( 'TYPO3\Flow\Http\Request' )
+		$mockHttpRequest = $this->getMockBuilder( 'Neos\Flow\Http\Request' )
 			->setMethods( array( 'getBaseUri' ) )
 			->disableOriginalConstructor()
 			->getMock();
@@ -40,7 +40,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 			->method( 'getBaseUri' )
 			->will( $this->returnValue( 'http://localhost/' ) );
 
-		$mockMainRequest = $this->getMockBuilder( 'TYPO3\Flow\Mvc\ActionRequest' )
+		$mockMainRequest = $this->getMockBuilder( 'Neos\Flow\Mvc\ActionRequest' )
 			->setMethods( array( 'getControllerObjectName', 'getArgumentNamespace' ) )
 			->setConstructorArgs( array( $mockHttpRequest ) )
 			->getMock();
@@ -48,13 +48,13 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 			->method( 'getArgumentNamespace' )
 			->will( $this->returnValue( 'ai' ) );
 
-		$this->mockRouter = $this->getMockBuilder( 'TYPO3\Flow\Mvc\Routing\Router' )->getMock();
-		$mockEnv = $this->getMockBuilder( 'TYPO3\Flow\Utility\Environment' )
+		$this->mockRouter = $this->getMockBuilder( 'Neos\Flow\Mvc\Routing\Router' )->getMock();
+		$mockEnv = $this->getMockBuilder( 'Neos\Flow\Utility\Environment' )
 			->setMethods( array( 'isRewriteEnabled' ) )
 			->disableOriginalConstructor()
 			->getMock();
 
-		$builder = new \TYPO3\Flow\Mvc\Routing\UriBuilder();
+		$builder = new \Neos\Flow\Mvc\Routing\UriBuilder();
 		$builder->setRequest( $mockMainRequest );
 
 		$objectReflection = new \ReflectionObject( $builder );

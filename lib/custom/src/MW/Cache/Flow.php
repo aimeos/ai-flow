@@ -29,9 +29,9 @@ class Flow
 	 * Initializes the object instance.
 	 *
 	 * @param array $config List of configuration values
-	 * @param \TYPO3\Flow\Cache\Frontend\FrontendInterface $cache TYPO3 cache object
+	 * @param \Neos\Cache\Frontend\FrontendInterface $cache Neos cache object
 	 */
-	public function __construct( array $config, \TYPO3\Flow\Cache\Frontend\FrontendInterface $cache )
+	public function __construct( array $config, \Neos\Cache\Frontend\FrontendInterface $cache )
 	{
 		$this->prefix = ( isset( $config['siteid'] ) ? $config['siteid'] . '-' : '' );
 		$this->object = $cache;

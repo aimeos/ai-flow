@@ -27,9 +27,9 @@ class Flow
 	/**
 	 * Initializes the logger object.
 	 *
-	 * @param \TYPO3\Flow\Log\SystemLoggerInterface $logger Flow logger object
+	 * @param \Neos\Flow\Log\SystemLoggerInterface $logger Flow logger object
 	 */
-	public function __construct( \TYPO3\Flow\Log\SystemLoggerInterface $logger )
+	public function __construct( \Neos\Flow\Log\SystemLoggerInterface $logger )
 	{
 		$this->logger = $logger;
 	}

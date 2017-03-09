@@ -15,7 +15,8 @@
 	"prefer-stable": true,
 	"require": {
 		"php": ">=5.3.3",
-		"typo3/flow": "~2.0||~3.0",
+		"neos/flow": "~4.0",
+		"neos/cache": "~4.0",
 		"composer/installers": "^1.0",
 		"zendframework/zend-diactoros": "~1.0",
 		"aimeos/aimeos-core": "dev-master"

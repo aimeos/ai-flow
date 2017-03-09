@@ -25,15 +25,15 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		if( class_exists( '\\TYPO3\\Flow\\Log\\Logger' ) === false ) {
-			$this->markTestSkipped( 'Class \\TYPO3\\Flow\\Log\\Logger not found' );
+		if( class_exists( '\\Neos\\Flow\\Log\\Logger' ) === false ) {
+			$this->markTestSkipped( 'Class \\Neos\\Flow\\Log\\Logger not found' );
 		}
 
-		$be = new \TYPO3\Flow\Log\Backend\FileBackend();
+		$be = new \Neos\Flow\Log\Backend\FileBackend();
 		$be->setSeverityThreshold( LOG_ERR );
 		$be->setLogFileURL( 'flow.log' );
 
-		$log = new \TYPO3\Flow\Log\Logger();
+		$log = new \Neos\Flow\Log\Logger();
 		$log->addBackend( $be );
 
 		$this->object = new \Aimeos\MW\Logger\Flow( $log );

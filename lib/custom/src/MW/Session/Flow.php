@@ -26,9 +26,9 @@ class Flow
 	/**
 	 * Initializes the object.
 	 *
-	 * @param \TYPO3\Flow\Session\SessionInterface $object Flow session object
+	 * @param \Neos\Flow\Session\SessionInterface $object Flow session object
 	 */
-	public function __construct( \TYPO3\Flow\Session\SessionInterface $object )
+	public function __construct( \Neos\Flow\Session\SessionInterface $object )
 	{
 		$this->object = $object;
 	}

@@ -2,23 +2,16 @@ sudo: false
 language: php
 
 php:
-  - hhvm
   - 7.0
-  - 5.6
-  - 5.5
-  - 5.4
 
 env:
-  - FLOW_VERSION=2.3.*
-  - FLOW_VERSION=3.0.*
-  - FLOW_VERSION=3.2.*
-  - FLOW_VERSION=3.3.*
+  - FLOW_VERSION=4.0.*
 
 before_script:
   - git clone --depth=50 --branch=master git://github.com/aimeos/aimeos-core.git ../aimeos-core
   - cd ../aimeos-core
   - mv ../ai-flow ext/
-  - travis_retry composer require "typo3/flow:${FLOW_VERSION}" "zendframework/zend-diactoros:~1.0"
+  - travis_retry composer require "neos/flow:${FLOW_VERSION}" "zendframework/zend-diactoros:~1.0"
 
 script: "vendor/bin/phing -Ddir=ext/ai-flow coverageext checkext"
 
@@ -27,12 +20,3 @@ after_success:
 
 matrix:
   fast_finish: true
-  exclude:
-    - php: 5.4
-      env: "FLOW_VERSION=3.0.*"
-    - php: 5.4
-      env: "FLOW_VERSION=3.1.*"
-    - php: 5.4
-      env: "FLOW_VERSION=3.2.*"
-    - php: 5.4
-      env: "FLOW_VERSION=3.3.*"

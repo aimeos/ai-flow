@@ -28,10 +28,10 @@ class Flow
 	 * Initializes the URL view helper.
 	 *
 	 * @param \Aimeos\MW\View\Iface $view View instance with registered view helpers
-	 * @param \TYPO3\Flow\Mvc\Routing\UriBuilder $builder Flow URI builder object
+	 * @param \Neos\Flow\Mvc\Routing\UriBuilder $builder Flow URI builder object
 	 * @param array Associative list of fixed parameters that should be available for all routes
 	 */
-	public function __construct( $view, \TYPO3\Flow\Mvc\Routing\UriBuilder $builder, array $fixed )
+	public function __construct( $view, \Neos\Flow\Mvc\Routing\UriBuilder $builder, array $fixed )
 	{
 		parent::__construct( $view );
 

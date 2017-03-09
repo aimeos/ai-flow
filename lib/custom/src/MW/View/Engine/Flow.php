@@ -25,9 +25,9 @@ class Flow implements Iface
 	/**
 	 * Initializes the view object
 	 *
-	 * @param \TYPO3\Fluid\View\StandaloneView $view Flow template view object
+	 * @param \Neos\Fluid\View\StandaloneView $view Flow template view object
 	 */
-	public function __construct( \TYPO3\Fluid\View\StandaloneView $view )
+	public function __construct( \Neos\Fluid\View\StandaloneView $view )
 	{
 		$this->view = $view;
 	}

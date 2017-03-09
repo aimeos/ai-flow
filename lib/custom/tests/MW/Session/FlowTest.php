@@ -25,11 +25,11 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		if( class_exists( '\\TYPO3\\Flow\\Session\\Session' ) === false ) {
-			$this->markTestSkipped( 'Class \\TYPO3\\Flow\\Session\\Session not found' );
+		if( class_exists( '\\Neos\\Flow\\Session\\Session' ) === false ) {
+			$this->markTestSkipped( 'Class \\Neos\\Flow\\Session\\Session not found' );
 		}
 
-		$session = new \TYPO3\Flow\Session\TransientSession();
+		$session = new \Neos\Flow\Session\TransientSession();
 		$session->start();
 
 		$this->object = new \Aimeos\MW\Session\Flow( $session );

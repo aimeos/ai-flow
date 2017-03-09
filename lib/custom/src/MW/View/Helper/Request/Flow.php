@@ -32,14 +32,14 @@ class Flow
 	 * Initializes the request view helper.
 	 *
 	 * @param \\Aimeos\MW\View\Iface $view View instance with registered view helpers
-	 * @param \TYPO3\Flow\Http\Request $request Flow request object
+	 * @param \Neos\Flow\Http\Request $request Flow request object
 	 * @param array $files List of uploaded files like in $_FILES
 	 * @param array $query List of uploaded files like in $_GET
 	 * @param array $post List of uploaded files like in $_POST
 	 * @param array $cookies List of uploaded files like in $_COOKIES
 	 * @param array $server List of uploaded files like in $_SERVER
 	 */
-	public function __construct( \Aimeos\MW\View\Iface $view, \TYPO3\Flow\Http\Request $request, array $files = array(),
+	public function __construct( \Aimeos\MW\View\Iface $view, \Neos\Flow\Http\Request $request, array $files = array(),
 		array $query = array(), array $post = array(), array $cookies = array(), array $server = array() )
 	{
 		$this->request = $request;
@@ -74,7 +74,7 @@ class Flow
 	/**
 	 * Creates a PSR-7 compatible request
 	 *
-	 * @param \TYPO3\Flow\Http\Request $nativeRequest Flow request object
+	 * @param \Neos\Flow\Http\Request $nativeRequest Flow request object
 	 * @param array $files List of uploaded files like in $_FILES
 	 * @param array $query List of uploaded files like in $_GET
 	 * @param array $post List of uploaded files like in $_POST
@@ -82,7 +82,7 @@ class Flow
 	 * @param array $server List of uploaded files like in $_SERVER
 	 * @return \Psr\Http\Message\ServerRequestInterface PSR-7 request object
 	 */
-	protected function createRequest( \TYPO3\Flow\Http\Request $nativeRequest, array $files,
+	protected function createRequest( \Neos\Flow\Http\Request $nativeRequest, array $files,
 		array $query, array $post, array $cookies, array $server )
 	{
 		$server = ServerRequestFactory::normalizeServer( $server );

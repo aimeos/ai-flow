@@ -14,8 +14,8 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		if( !class_exists( '\TYPO3\Flow\Http\Request' ) ) {
-			$this->markTestSkipped( '\TYPO3\Flow\Http\Request is not available' );
+		if( !class_exists( '\Neos\Flow\Http\Request' ) ) {
+			$this->markTestSkipped( '\Neos\Flow\Http\Request is not available' );
 		}
 
 		if( !class_exists( '\Zend\Diactoros\ServerRequestFactory' ) ) {
@@ -24,7 +24,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 
 		$view = new \Aimeos\MW\View\Standard();
 		$server = array( 'REMOTE_ADDR' => '127.0.0.1' );
-		$request = new \TYPO3\Flow\Http\Request( array(), array(), array(), $server );
+		$request = new \Neos\Flow\Http\Request( array(), array(), array(), $server );
 		$this->object = new \Aimeos\MW\View\Helper\Request\Flow( $view, $request, array(), array(), array(), array(), $server );
 	}
 

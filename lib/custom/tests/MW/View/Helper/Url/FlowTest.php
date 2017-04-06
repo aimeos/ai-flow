@@ -115,7 +115,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 		$this->mockRouter->expects( $this->once() )->method( 'resolve' )
 			->will( $this->returnValue( 'shop/catalog/lists') );
 
-		$this->assertEquals( '/index.php/shop/catalog/lists#a/b', $this->object->transform( 'shop', 'catalog', 'lists', array(), array( 'a', 'b' ) ) );
+		$this->assertEquals( '/index.php/shop/catalog/lists#a/b', $this->object->transform( 'shop', 'catalog', 'lists', [], array( 'a', 'b' ) ) );
 	}
 
 
@@ -125,7 +125,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 			->will( $this->returnValue( 'shop/catalog/lists') );
 
 		$options = array( 'absoluteUri' => true );
-		$result = $this->object->transform( 'shop', 'catalog', 'lists', array(), array(), $options );
+		$result = $this->object->transform( 'shop', 'catalog', 'lists', [], [], $options );
 
 		$this->assertEquals( 'http://localhost/index.php/shop/catalog/lists', $result );
 	}
@@ -137,7 +137,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 			->will( $this->returnValue( 'shop/catalog/lists') );
 
 		$options = array( 'package' => 'test', 'subpackage' => 'subtest', 'format' => 'fmt' );
-		$result = $this->object->transform( 'shop', 'catalog', 'lists', array(), array(), $options );
+		$result = $this->object->transform( 'shop', 'catalog', 'lists', [], [], $options );
 
 		$this->assertEquals( '/index.php/shop/catalog/lists', $result );
 	}

@@ -24,8 +24,8 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 
 		$view = new \Aimeos\MW\View\Standard();
 		$server = array( 'REMOTE_ADDR' => '127.0.0.1' );
-		$request = new \Neos\Flow\Http\Request( array(), array(), array(), $server );
-		$this->object = new \Aimeos\MW\View\Helper\Request\Flow( $view, $request, array(), array(), array(), array(), $server );
+		$request = new \Neos\Flow\Http\Request( [], [], [], $server );
+		$this->object = new \Aimeos\MW\View\Helper\Request\Flow( $view, $request, [], [], [], [], $server );
 	}
 
 

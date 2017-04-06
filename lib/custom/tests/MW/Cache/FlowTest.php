@@ -22,7 +22,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase
 		}
 
 		$this->mock = $this->getMockBuilder( 'Neos\Cache\Frontend\FrontendInterface' )->getMock();
-		$this->object = new \Aimeos\MW\Cache\Flow( array(), $this->mock );
+		$this->object = new \Aimeos\MW\Cache\Flow( [], $this->mock );
 	}
 
 

@@ -39,8 +39,8 @@ class Flow
 	 * @param array $cookies List of uploaded files like in $_COOKIES
 	 * @param array $server List of uploaded files like in $_SERVER
 	 */
-	public function __construct( \Aimeos\MW\View\Iface $view, \Neos\Flow\Http\Request $request, array $files = array(),
-		array $query = array(), array $post = array(), array $cookies = array(), array $server = array() )
+	public function __construct( \Aimeos\MW\View\Iface $view, \Neos\Flow\Http\Request $request, array $files = [],
+		array $query = [], array $post = [], array $cookies = [], array $server = [] )
 	{
 		$this->request = $request;
 		$psr7request = $this->createRequest( $request, $files, $query, $post, $cookies, $server );

@@ -33,7 +33,7 @@ class Typo3Test extends \PHPUnit_Framework_TestCase
 
 	public function testRender()
 	{
-		$v = new \Aimeos\MW\View\Standard( array() );
+		$v = new \Aimeos\MW\View\Standard( [] );
 
 		$this->mock->expects( $this->once() )->method( 'setTemplatePathAndFilename' );
 		$this->mock->expects( $this->once() )->method( 'assignMultiple' );

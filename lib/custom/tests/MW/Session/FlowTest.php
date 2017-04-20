@@ -12,7 +12,7 @@ namespace Aimeos\MW\Session;
 /**
  * Test class for \Aimeos\MW\Session\Flow.
  */
-class FlowTest extends \PHPUnit_Framework_TestCase
+class FlowTest extends \PHPUnit\Framework\TestCase
 {
 	private $object;
 

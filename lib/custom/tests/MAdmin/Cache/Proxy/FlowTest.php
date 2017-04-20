@@ -9,7 +9,7 @@
 namespace Aimeos\MAdmin\Cache\Proxy;
 
 
-class FlowTest extends \PHPUnit_Framework_TestCase
+class FlowTest extends \PHPUnit\Framework\TestCase
 {
 	private $object;
 	private $mock;

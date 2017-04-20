@@ -9,7 +9,7 @@
 namespace Aimeos\MW\View\Helper\Response;
 
 
-class FlowTest extends \PHPUnit_Framework_TestCase
+class FlowTest extends \PHPUnit\Framework\TestCase
 {
 	private $object;
 

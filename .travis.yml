@@ -9,7 +9,7 @@ env:
   - FLOW_VERSION=4.0.*
 
 before_script:
-  - git clone --depth=50 --branch=master git://github.com/aimeos/aimeos-core.git ../aimeos-core
+  - git clone --depth=50 --branch=2017.04 git://github.com/aimeos/aimeos-core.git ../aimeos-core
   - cd ../aimeos-core
   - mv ../ai-flow ext/
   - travis_retry composer require "neos/flow:${FLOW_VERSION}" "zendframework/zend-diactoros:~1.0"

@@ -6,6 +6,7 @@ php:
   - 7.0
 
 env:
+  - FLOW_VERSION=4.1.*
   - FLOW_VERSION=4.0.*
 
 before_script:

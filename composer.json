@@ -19,7 +19,7 @@
 		"neos/cache": "~4.0",
 		"composer/installers": "^1.0",
 		"zendframework/zend-diactoros": "~1.0",
-		"aimeos/aimeos-core": "dev-master"
+		"aimeos/aimeos-core": "~2017.10"
 	},
 	"autoload": {
 		"psr-4": {

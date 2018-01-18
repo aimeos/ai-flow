@@ -4,7 +4,7 @@
 	"keywords": ["aimeos", "adapter", "typo3", "flow", "neoscms", "shop", "e-commerce"],
 	"homepage": "https://aimeos.org/Flow",
 	"type": "aimeos-extension",
-	"license": "LGPL-3.0",
+	"license": "LGPL-3.0-or-later",
 	"support": {
 		"source": "https://github.com/aimeos/ai-flow",
 		"issues": "https://github.com/aimeos/ai-flow/issues",

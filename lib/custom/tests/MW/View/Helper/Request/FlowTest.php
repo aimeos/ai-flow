@@ -37,7 +37,7 @@ class FlowTest extends \PHPUnit\Framework\TestCase
 
 	public function testTransform()
 	{
-		$this->assertInstanceOf( '\Aimeos\MW\View\Helper\Request\Flow', $this->object->transform() );
+		$this->assertInstanceOf( \Aimeos\MW\View\Helper\Request\Flow::class, $this->object->transform() );
 	}
 
 

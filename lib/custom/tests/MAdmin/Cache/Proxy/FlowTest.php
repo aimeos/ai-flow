@@ -21,7 +21,7 @@ class FlowTest extends \PHPUnit\Framework\TestCase
 			$this->markTestSkipped( 'Class \\Neos\\Cache\\Frontend\\StringFrontend not found' );
 		}
 
-		$localeItem = $this->getMockBuilder( '\Aimeos\MShop\Locale\Item\Standard' )
+		$localeItem = $this->getMockBuilder( \Aimeos\MShop\Locale\Item\Standard::class )
 			->setMethods( ['getSiteId'])
 			->getMock();
 
@@ -44,11 +44,11 @@ class FlowTest extends \PHPUnit\Framework\TestCase
 
 	public function testGetObject()
 	{
-		$class = new \ReflectionClass( '\Aimeos\MAdmin\Cache\Proxy\Flow' );
+		$class = new \ReflectionClass( \Aimeos\MAdmin\Cache\Proxy\Flow::class );
 		$method = $class->getMethod( 'getObject' );
 		$method->setAccessible( true );
 
 		$result = $method->invokeArgs( $this->object, [] );
-		$this->assertInstanceOf( '\Aimeos\MW\Cache\Iface', $result );
+		$this->assertInstanceOf( \Aimeos\MW\Cache\Iface::class, $result );
 	}
 }

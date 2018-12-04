@@ -16,7 +16,7 @@ class Typo3Test extends \PHPUnit\Framework\TestCase
 
 	protected function setUp()
 	{
-		$this->mock = $this->getMockBuilder( '\Neos\FluidAdaptor\View\StandaloneView' )
+		$this->mock = $this->getMockBuilder( \Neos\FluidAdaptor\View\StandaloneView::class )
 			->setMethods( array( 'assign', 'assignMultiple', 'render', 'setTemplatePathAndFilename' ) )
 			->disableOriginalConstructor()
 			->getMock();

@@ -50,7 +50,7 @@ class Flow
 		{
 			$siteid = $this->context->getLocale()->getSiteId();
 			$conf = array( 'siteid' => $this->context->getConfig()->get( 'madmin/cache/prefix' ) . $siteid );
-			$this->object = \Aimeos\MW\Cache\Factory::createManager( 'Flow', $conf, $this->cache );
+			$this->object = \Aimeos\MW\Cache\Factory::create( 'Flow', $conf, $this->cache );
 		}
 
 		return $this->object;

@@ -170,7 +170,6 @@ class Flow
 				} else {
 					$result[$key] = $value;
 				}
-
 			}
 		}
 

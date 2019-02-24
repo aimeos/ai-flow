@@ -76,7 +76,7 @@ class TestHelper
 		$session = new \Aimeos\MW\Session\None();
 		$ctx->setSession( $session );
 
-		$ctx->setEditor( 'ai-flow:unittest' );
+		$ctx->setEditor( 'ai-flow:lib/custom' );
 
 		return $ctx;
 	}

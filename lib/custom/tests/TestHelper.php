@@ -50,7 +50,7 @@ class TestHelper
 	 * Creates a new context item.
 	 *
 	 * @param string $site Unique site code
-	 * @return \\Aimeos\MShop\Context\Item\Iface Context object
+	 * @return \Aimeos\MShop\Context\Item\Iface Context object
 	 */
 		private static function createContext( $site )
 	{

@@ -17,8 +17,7 @@ namespace Aimeos\MW\Session;
  * @package MW
  * @subpackage Session
  */
-class Flow
-	implements \Aimeos\MW\Session\Iface
+class Flow extends Base implements \Aimeos\MW\Session\Iface
 {
 	private $object;
 

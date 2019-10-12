@@ -6,7 +6,6 @@ php:
   - 7.3
   - 7.2
   - 7.1
-  - 7.0
 
 env:
   - FLOW_VERSION=5.0.*
@@ -27,6 +26,3 @@ after_success:
 
 matrix:
   fast_finish: true
-  exclude:
-  - php: 7.0
-    env: FLOW_VERSION=5.0.*

@@ -39,15 +39,51 @@ class Flow
 
 
 	/**
+	 * Removes all expired cache entries.
+	 *
+	 * @inheritDoc
+	 *
+	 * @return bool True on success and false on failure
+	 */
+	public function cleanup() : bool
+	{
+		$this->object->collectGarbage();
+		return true;
+	}
+
+
+	/**
+	 * Removes all entries for the current site from the cache.
+	 *
+	 * @inheritDoc
+	 *
+	 * @return bool True on success and false on failure
+	 */
+	public function clear() : bool
+	{
+		if( $this->prefix ) {
+			$this->object->flushByTag( $this->prefix . 'siteid' );
+		} else {
+			$this->object->flush();
+		}
+
+		return true;
+	}
+
+
+	/**
 	 * Removes the cache entry identified by the given key.
 	 *
 	 * @inheritDoc
 	 *
 	 * @param string $key Key string that identifies the single cache entry
+	 * @return bool True if the item was successfully removed. False if there was an error
+	 * @throws \Psr\SimpleCache\InvalidArgumentException
 	 */
-	public function delete( $key )
+	public function delete( string $key ) : bool
 	{
 		$this->object->remove( $this->prefix . $key );
+		return true;
 	}
 
 
@@ -56,14 +92,17 @@ class Flow
 	 *
 	 * @inheritDoc
 	 *
-	 * @param \Traversable|array $keys List of key strings that identify the cache entries
-	 * 	that should be removed
+	 * @param iterable $keys List of key strings that identify the cache entries that should be removed
+	 * @return bool True if the items were successfully removed. False if there was an error.
+	 * @throws \Psr\SimpleCache\InvalidArgumentException
 	 */
-	public function deleteMultiple( $keys )
+	public function deleteMultiple( iterable $keys ) : bool
 	{
 		foreach( $keys as $key ) {
 			$this->object->remove( $this->prefix . $key );
 		}
+
+		return true;
 	}
 
 
@@ -72,29 +111,18 @@ class Flow
 	 *
 	 * @inheritDoc
 	 *
-	 * @param string[] $tags List of tag strings that are associated to one or more
-	 * 	cache entries that should be removed
+	 * @param iterable $tags List of tag strings that are associated to one or
+	 *  more cache entries that should be removed
+	 * @return bool True if the items were successfully removed. False if there was an error.
+	 * @throws \Psr\SimpleCache\InvalidArgumentException
 	 */
-	public function deleteByTags( array $tags )
+	public function deleteByTags( iterable $tags ) : bool
 	{
 		foreach( $tags as $tag ) {
 			$this->object->flushByTag( $this->prefix . $tag );
 		}
-	}
 
-
-	/**
-	 * Removes all entries for the current site from the cache.
-	 *
-	 * @inheritDoc
-	 */
-	public function clear()
-	{
-		if( $this->prefix ) {
-			$this->object->flushByTag( $this->prefix . 'siteid' );
-		} else {
-			$this->object->flush();
-		}
+		return true;
 	}
 
 
@@ -103,13 +131,15 @@ class Flow
 	 *
 	 * @inheritDoc
 	 *
-	 * @param string $name Path to the requested value like tree/node/classname
-	 * @param string $default Value returned if requested key isn't found
-	 * @return mixed Value associated to the requested key
+	 * @param string $key Path to the requested value like product/id/123
+	 * @param mixed $default Value returned if requested key isn't found
+	 * @return mixed Value associated to the requested key. If no value for the
+	 *	key is found in the cache, the given default value is returned
+	 * @throws \Psr\SimpleCache\InvalidArgumentException
 	 */
-	public function get( $name, $default = null )
+	public function get( string $key, $default = null )
 	{
-		if( ( $entry = $this->object->get( $this->prefix . $name ) ) !== false ) {
+		if( ( $entry = $this->object->get( $this->prefix . $key ) ) !== false ) {
 			return $entry;
 		}
 
@@ -122,14 +152,12 @@ class Flow
 	 *
 	 * @inheritDoc
 	 *
-	 * @param \Traversable|array $keys List of key strings for the requested cache entries
+	 * @param iterable $keys List of key strings for the requested cache entries
 	 * @param mixed $default Default value to return for keys that do not exist
-	 * @return array Associative list of key/value pairs for the requested cache
-	 * 	entries. If a cache entry doesn't exist, neither its key nor a value
-	 * 	will be in the result list
-	 * @throws \Aimeos\MW\Cache\Exception If the cache server doesn't respond
+	 * @return iterable A list of key => value pairs. Cache keys that do not exist or are stale will have $default as value.
+	 * @throws \Psr\SimpleCache\InvalidArgumentException
 	 */
-	public function getMultiple( $keys, $default = null )
+	public function getMultiple( iterable $keys, $default = null ) : iterable
 	{
 		$result = [];
 
@@ -147,33 +175,17 @@ class Flow
 
 
 	/**
-	 * Returns the cached keys and values associated to the given tags.
+	 * Determines whether an item is present in the cache.
 	 *
 	 * @inheritDoc
 	 *
-	 * @param string[] $tags List of tag strings associated to the requested cache entries
-	 * @return array Associative list of key/value pairs for the requested cache
-	 * 	entries. If a tag isn't associated to any cache entry, nothing is returned
-	 * 	for that tag
+	 * @param string $key The cache item key
+	 * @return bool True if cache entry is available, false if not
+	 * @throws \Psr\SimpleCache\InvalidArgumentException
 	 */
-	public function getMultipleByTags( array $tags )
+	public function has( string $key ) : bool
 	{
-		$result = [];
-		$len = strlen( $this->prefix );
-
-		foreach( $tags as $tag )
-		{
-			foreach( $this->object->getByTag( $this->prefix . $tag ) as $key => $value )
-			{
-				if( strncmp( $key, $this->prefix, $len ) === 0 ) {
-					$result[ substr( $key, $len ) ] = $value;
-				} else {
-					$result[$key] = $value;
-				}
-			}
-		}
-
-		return $result;
+		return $this->object->has( $this->prefix . $key );
 	}
 
 
@@ -184,14 +196,18 @@ class Flow
 	 *
 	 * @param string $key Key string for the given value like product/id/123
 	 * @param mixed $value Value string that should be stored for the given key
-	 * @param int|string|null $expires Date/time string in "YYYY-MM-DD HH:mm:ss"
-	 * 	format when the cache entry expires
-	 * @param array $tags List of tag strings that should be assoicated to the
-	 * 	given value in the cache
+	 * @param \DateInterval|int|string|null $expires Date interval object,
+	 *  date/time string in "YYYY-MM-DD HH:mm:ss" format or as integer TTL value
+	 *  when the cache entry will expiry
+	 * @param iterable $tags List of tag strings that should be assoicated to the cache entry
+	 * @return bool True on success and false on failure.
+	 * @throws \Psr\SimpleCache\InvalidArgumentException
 	 */
-	public function set( $key, $value, $expires = null, array $tags = [] )
+	public function set( string $key, $value, $expires = null, iterable $tags = [] ) : bool
 	{
-		if( is_string( $expires ) ) {
+		if( $expires instanceof \DateInterval ) {
+			$expires = date_create()->add( $expires )->getTimestamp() - time();
+		} elseif( is_string( $expires ) ) {
 			$expires = date_create( $expires )->getTimestamp() - time();
 		}
 
@@ -202,6 +218,7 @@ class Flow
 		}
 
 		$this->object->set( $this->prefix . $key, $value, $tagList, $expires );
+		return true;
 	}
 
 
@@ -211,24 +228,20 @@ class Flow
 	 *
 	 * @inheritDoc
 	 *
-	 * @param \Traversable|array $pairs Associative list of key/value pairs. Both must be
-	 * 	a string
-	 * @param array|int|string|null $expires Associative list of keys and datetime
-	 *  string or integer TTL pairs.
-	 * @param array $tags Associative list of key/tag or key/tags pairs that
-	 *  should be associated to the values identified by their key. The value
-	 *  associated to the key can either be a tag string or an array of tag strings
-	 * @return null
-	 * @throws \Aimeos\MW\Cache\Exception If the cache server doesn't respond
+	 * @param iterable $pairs Associative list of key/value pairs. Both must be a string
+	 * @param \DateInterval|int|string|null $expires Date interval object,
+	 *  date/time string in "YYYY-MM-DD HH:mm:ss" format or as integer TTL value
+	 *  when the cache entry will expiry
+	 * @param iterable $tags List of tags that should be associated to the cache entries
+	 * @return bool True on success and false on failure.
+	 * @throws \Psr\SimpleCache\InvalidArgumentException
 	 */
-	public function setMultiple( $pairs, $expires = null, array $tags = [] )
+	public function setMultiple( iterable $pairs, $expires = null, iterable $tags = [] ) : bool
 	{
-		foreach( $pairs as $key => $value )
-		{
-			$tagList = ( isset( $tags[$key] ) ? (array) $tags[$key] : [] );
-			$keyExpire = ( isset( $expires[$key] ) ? $expires[$key] : $expires );
-
-			$this->set( $key, $value, $keyExpire, $tagList );
+		foreach( $pairs as $key => $value ) {
+			$this->set( $key, $value, $expires, $tags );
 		}
+
+		return true;
 	}
 }

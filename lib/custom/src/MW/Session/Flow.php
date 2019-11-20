@@ -42,7 +42,7 @@ class Flow extends Base implements \Aimeos\MW\Session\Iface
 	 * @param mixed $default Value returned if requested key isn't found
 	 * @return mixed Value associated to the requested key
 	 */
-	public function get( $name, $default = null )
+	public function get( string $name, $default = null )
 	{
 		if( $this->object->hasKey( $name ) !== true ) {
 			return $default;
@@ -59,10 +59,10 @@ class Flow extends Base implements \Aimeos\MW\Session\Iface
 	 *
 	 * @param string $name Key to the value which should be stored in the session
 	 * @param mixed $value Value that should be associated with the given key
-	 * @return void
 	 */
-	public function set( $name, $value )
+	public function set( string $name, $value ) : Iface
 	{
 		$this->object->putData( $name, $value );
+		return $this;
 	}
 }

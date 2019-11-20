@@ -56,14 +56,14 @@ class FlowTest extends \PHPUnit\Framework\TestCase
 
 	public function testGetSet()
 	{
-		$this->object->set( 'key', 'value' );
+		$this->assertInstanceof( '\Aimeos\MW\Session\Iface', $this->object->set( 'key', 'value' ) );
 		$this->assertEquals( 'value', $this->object->get( 'key' ) );
 	}
 
 
 	public function testGetSetArray()
 	{
-		$this->object->set( 'key', array( 'value' ) );
+		$this->assertInstanceof( '\Aimeos\MW\Session\Iface', $this->object->set( 'key', array( 'value' ) ) );
 		$this->assertEquals( array( 'value' ), $this->object->get( 'key' ) );
 	}
 }

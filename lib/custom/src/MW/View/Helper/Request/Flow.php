@@ -54,7 +54,7 @@ class Flow
 	 *
 	 * @return string Client IP address
 	 */
-	public function getClientAddress()
+	public function getClientAddress() : string
 	{
 		return $this->request->getClientIpAddress();
 	}
@@ -65,7 +65,7 @@ class Flow
 	 *
 	 * @return string|null Current page or route name
 	 */
-	public function getTarget()
+	public function getTarget() : ?string
 	{
 		return null;
 	}
@@ -83,7 +83,7 @@ class Flow
 	 * @return \Psr\Http\Message\ServerRequestInterface PSR-7 request object
 	 */
 	protected function createRequest( \Neos\Flow\Http\Request $nativeRequest, array $files,
-		array $query, array $post, array $cookies, array $server )
+		array $query, array $post, array $cookies, array $server ) : \Psr\Http\Message\ServerRequestInterface
 	{
 		$server = ServerRequestFactory::normalizeServer( $server );
 		$files = ServerRequestFactory::normalizeFiles( $files );

@@ -52,7 +52,8 @@ class Flow
 	 * @param array $config Additional configuration parameter per URL
 	 * @return string Complete URL that can be used in the template
 	 */
-	public function transform( $target = null, $controller = null, $action = null, array $params = [], array $trailing = [], array $config = [] )
+	public function transform( string $target = null, string $controller = null, string $action = null,
+		array $params = [], array $trailing = [], array $config = [] ) : string
 	{
 		$params = $this->sanitize( $params );
 		$values = $this->getValues( $config );
@@ -65,7 +66,7 @@ class Flow
 
 		$params['node'] = $target;
 
-		return $this->builder->uriFor( $action, $params + $this->fixed, $controller, $values['package'], $values['subpackage'] );
+		return $this->builder->uriFor( (string) $action, $params + $this->fixed, $controller, $values['package'], $values['subpackage'] );
 	}
 
 
@@ -75,7 +76,7 @@ class Flow
 	 * @param array $config Associative list of key/value pairs
 	 * @return array Associative list of sanitized key/value pairs
 	 */
-	protected function getValues( array $config )
+	protected function getValues( array $config ) : array
 	{
 		$values = array(
 			'package' => 'Aimeos.Shop',
